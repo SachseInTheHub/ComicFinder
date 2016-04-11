@@ -26,5 +26,5 @@
         android:layout_marginRight="20dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="search"/>
+        />
 </RelativeLayout>
