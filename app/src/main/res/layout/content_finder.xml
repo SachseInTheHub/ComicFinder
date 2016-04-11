@@ -13,10 +13,6 @@
     tools:showIn="@layout/activity_finder"
     tools:context="com.sachse.comicfinder.FinderActivity">
 
-    <TextView
-        android:text="Search for the Hero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/search_et"
@@ -27,4 +23,13 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         />
+
+    <TextView
+        android:layout_above="@+id/search_et"
+        android:text="Search for your comic character"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="20sp"/>
 </RelativeLayout>
