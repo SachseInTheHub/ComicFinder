@@ -1,1 +1,8 @@
 /build
+
+# Gradle files
+.gradle/
+build/
+.build.gradle
+app/build.gradle
+
