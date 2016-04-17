@@ -6,11 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.sachse.comicfinder.api.API;
+import com.sachse.comicfinder.api.ApiCall;
+
 public class BaseActivity extends AppCompatActivity{
+
+	public ApiCall mApiCall;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		mApiCall = API.getRetrofit().create(ApiCall.class);
 	}
 
 	@Override
