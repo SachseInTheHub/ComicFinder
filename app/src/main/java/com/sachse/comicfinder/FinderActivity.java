@@ -1,30 +1,36 @@
 package com.sachse.comicfinder;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sachse.comicfinder.api.models.ApiResults;
-import com.sachse.comicfinder.api.models.ApiStatus;
+import com.sachse.comicfinder.api.models.Character;
+import com.sachse.comicfinder.api.models.CharacterDataWrapper;
+import com.sachse.comicfinder.api.models.Comic;
+import com.sachse.comicfinder.api.models.ComicDataWrapper;
+import com.sachse.comicfinder.views.ComicsAdapter;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FinderActivity extends BaseActivity implements View.OnClickListener{
+public class FinderActivity extends BaseActivity {
 
-	public FloatingActionButton mFloatingActionButton;
 	public EditText mSearchField;
 	public ImageView mProfileIV;
 	public TextView mProfileHistoryTV;
+	public RecyclerView mComicsRV;
+	public RecyclerView.Adapter mComicsAdapter;
+	public RecyclerView.LayoutManager mComicsLayoutManager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +39,16 @@ public class FinderActivity extends BaseActivity implements View.OnClickListener
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-    mFloatingActionButton.setOnClickListener(this);
     mSearchField = (EditText) findViewById(R.id.search_et);
 	  mProfileIV = (ImageView) findViewById(R.id.profile_iv);
 	  mProfileHistoryTV = (TextView) findViewById(R.id.profile_story_tv);
+
+	  mComicsRV = (RecyclerView) findViewById(R.id.comics_rv);
+	  mComicsRV.setHasFixedSize(true);
+
+	  // use a linear layout manager
+	  mComicsLayoutManager = new LinearLayoutManager(this);
+	  mComicsRV.setLayoutManager(mComicsLayoutManager);
 
 	  mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 		  @Override
@@ -46,45 +57,51 @@ public class FinderActivity extends BaseActivity implements View.OnClickListener
 			  return false;
 		  }
 	  });
-
   }
 
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-			case R.id.fab:
-				Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-				performCall();
-				break;
-		}
-	}
-
 	private void performCall(){
-		Call<ApiStatus> call = mApiCall.getCharacterByName(mSearchField.getText().toString());
-		call.enqueue(new Callback<ApiStatus>() {
+		Call<CharacterDataWrapper> call = mApiCall.getCharacterByName(mSearchField.getText().toString());
+		call.enqueue(new Callback<CharacterDataWrapper>() {
 			@Override
-			public void onResponse(Call<ApiStatus> call, Response<ApiStatus> response) {
-
+			public void onResponse(Call<CharacterDataWrapper> call, Response<CharacterDataWrapper> response) {
 				if(response.isSuccess()) {
-					ApiStatus apiStatus = new ApiStatus(response.body());
-					final int size = apiStatus.data.results.size();
-					Log.d("COMIC", "size: "+apiStatus.data.results.size());
-					if(size >= 1) {
-						ApiResults apiResults = new ApiResults(apiStatus.data.results.get(0));
+					CharacterDataWrapper characterDataWrapper = new CharacterDataWrapper(response.body());
+					final int size = characterDataWrapper.data.results.size();
 
-						String profileUrl = apiResults.thumbnail.getResourcePath();
+					if(size >= 1) {
+						Character character = new Character(characterDataWrapper.data.results.get(0));
+						callCharacterComics(character.id);
+
+						String profileUrl = character.thumbnail.getResourcePath();
 						Picasso.with(getApplicationContext()).load(profileUrl).into(mProfileIV);
-						mProfileHistoryTV.setText(apiStatus.data.results.get(0).description);
+						mProfileHistoryTV.setText(characterDataWrapper.data.results.get(0).description);
 					} else {
 						mProfileHistoryTV.setText("No results!");
 					}
-
 				}
 			}
 
 			@Override
-			public void onFailure(Call<ApiStatus> call, Throwable t) {
+			public void onFailure(Call<CharacterDataWrapper> call, Throwable t) {
+				Log.d("Call", "fail"+t.toString());
+			}
+		});
+	}
+
+	private void callCharacterComics(int id){
+		Call<ComicDataWrapper> call = mApiCall.getCharacterComics(id);
+		call.enqueue(new Callback<ComicDataWrapper>() {
+			@Override
+			public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
+				ComicDataWrapper comicDataWrapper = new ComicDataWrapper(response.body());
+				final List<Comic> comics = comicDataWrapper.data.results;
+				mComicsAdapter = new ComicsAdapter(getApplicationContext(), comics);
+				mComicsRV.setAdapter(mComicsAdapter);
+
+			}
+
+			@Override
+			public void onFailure(Call<ComicDataWrapper> call, Throwable t) {
 				Log.d("Call", "fail"+t.toString());
 			}
 		});

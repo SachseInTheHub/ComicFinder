@@ -1,21 +1,21 @@
 package com.sachse.comicfinder.api.models;
 
-public class ApiStatus {
+public class CharacterDataWrapper {
 
 	public int code;
 	public String status;
 	public String copyright;
 	public String attributionText;
 	public String attributionHTML;
-	public ApiData data;
+	public CharacterDataContainer data;
 
-	public ApiStatus(ApiStatus body) {
+	public CharacterDataWrapper(CharacterDataWrapper body) {
 		code = body.code;
 		status = body.status;
 		copyright = body.copyright;
 		attributionHTML = body.attributionHTML;
 		attributionText = body.attributionText;
 		data = body.data;
-
 	}
+
 }
