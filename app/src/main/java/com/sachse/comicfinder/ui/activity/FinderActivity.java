@@ -1,4 +1,4 @@
-package com.sachse.comicfinder;
+package com.sachse.comicfinder.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.api.models.Character;
 import com.sachse.comicfinder.api.models.CharacterDataWrapper;
 import com.sachse.comicfinder.api.models.Comic;
 import com.sachse.comicfinder.api.models.ComicDataWrapper;
-import com.sachse.comicfinder.views.ComicsAdapter;
+import com.sachse.comicfinder.ui.BaseActivity;
+import com.sachse.comicfinder.ui.views.ComicsAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -61,9 +63,11 @@ public class FinderActivity extends BaseActivity {
 
 	private void performCall(){
 		Call<CharacterDataWrapper> call = mApiCall.getCharacterByName(mSearchField.getText().toString());
+
 		call.enqueue(new Callback<CharacterDataWrapper>() {
 			@Override
 			public void onResponse(Call<CharacterDataWrapper> call, Response<CharacterDataWrapper> response) {
+
 				if(response.isSuccess()) {
 					CharacterDataWrapper characterDataWrapper = new CharacterDataWrapper(response.body());
 					final int size = characterDataWrapper.data.results.size();
@@ -89,8 +93,30 @@ public class FinderActivity extends BaseActivity {
 	}
 
 	private void callCharacterComics(int id){
-		Call<ComicDataWrapper> call = mApiCall.getCharacterComics(id);
-		call.enqueue(new Callback<ComicDataWrapper>() {
+//		mApiCall.getCharacterComics(id)
+//				.subscribeOn(Schedulers.newThread())
+//				.observeOn(AndroidSchedulers.mainThread())
+//				.subscribe(new Subscriber<ComicDataWrapper>() {
+//					@Override
+//					public void onCompleted() {
+//
+//					}
+//
+//					@Override
+//					public void onError(Throwable e) {
+//						Log.d("ComicFinder", "Error "+e.getMessage());
+//					}
+//
+//					@Override
+//					public void onNext(ComicDataWrapper comicDataWrapper) {
+//						final List<Comic> comics = comicDataWrapper.data.results;
+//						mComicsAdapter = new ComicsAdapter(getApplicationContext(), comics);
+//						mComicsRV.setAdapter(mComicsAdapter);
+//					}
+//				});
+
+
+		mApiCall.getCharacterComics(id).enqueue(new Callback<ComicDataWrapper>() {
 			@Override
 			public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
 				ComicDataWrapper comicDataWrapper = new ComicDataWrapper(response.body());

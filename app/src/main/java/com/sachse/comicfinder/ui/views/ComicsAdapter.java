@@ -1,4 +1,4 @@
-package com.sachse.comicfinder.views;
+package com.sachse.comicfinder.ui.views;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +20,7 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ViewHolder
 	private Context mContext;
 
 	public ComicsAdapter(Context context, List<Comic> comics){
+		super();
 		mContext = context;
 		mComics = comics;
 	}
