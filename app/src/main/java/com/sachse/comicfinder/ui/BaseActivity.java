@@ -10,7 +10,7 @@ import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.api.API;
 import com.sachse.comicfinder.api.ApiCall;
 
-public class BaseActivity extends AppCompatActivity{
+public class BaseActivity extends AppCompatActivity {
 
 	public ApiCall mApiCall;
 

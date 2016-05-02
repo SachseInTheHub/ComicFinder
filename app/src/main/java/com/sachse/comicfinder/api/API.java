@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class API {
 	public static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
+	public static final String SEARCH_QUERY = "SEARCH_QUERY";
 
 	public static Retrofit getRetrofit() {
 		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
