@@ -15,14 +15,13 @@ public class FinderActivity extends BaseActivity {
 
 	public EditText mSearchField;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.activity_finder);
 	  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 	  setSupportActionBar(toolbar);
-	  
+
 	  mSearchField = (EditText) findViewById(R.id.search_et);
 	  mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 		  @Override
