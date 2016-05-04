@@ -104,7 +104,7 @@ public class ResultActivity extends BaseActivity {
 //				});
 
 
-		mApiCall.getCharacterComics(character.id).enqueue(new Callback<ComicDataWrapper>() {
+		mApiCall.getCharacterComics(character.id,"comic","onsaleDate").enqueue(new Callback<ComicDataWrapper>() {
 			@Override
 			public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
 				final ComicDataWrapper comicDataWrapper = new ComicDataWrapper(response.body());

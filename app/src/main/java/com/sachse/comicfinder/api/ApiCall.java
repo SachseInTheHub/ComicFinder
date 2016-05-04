@@ -14,5 +14,5 @@ public interface ApiCall {
 	Call<CharacterDataWrapper> getCharacterByName(@Query("name") String name);
 
 	@GET("characters/{characterId}/comics")
-	Call<ComicDataWrapper> getCharacterComics(@Path("characterId") int characterId);
+	Call<ComicDataWrapper> getCharacterComics(@Path("characterId") int characterId, @Query("format") String format, @Query("orderBy") String orderBy);
 }
