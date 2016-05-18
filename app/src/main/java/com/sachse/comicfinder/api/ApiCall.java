@@ -11,6 +11,9 @@ import retrofit2.http.Query;
 public interface ApiCall {
 
 	@GET("characters")
+	Call<CharacterDataWrapper> getAllCharacters(@Query("limit")int limit, @Query("offset") int offset);
+
+	@GET("characters")
 	Call<CharacterDataWrapper> getCharacterByName(@Query("name") String name);
 
 	@GET("characters/{characterId}/comics")

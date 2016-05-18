@@ -1,5 +1,7 @@
 package com.sachse.comicfinder.api.models;
 
+import com.sachse.comicfinder.database.model.Character;
+
 import java.util.List;
 
 public class CharacterDataContainer {

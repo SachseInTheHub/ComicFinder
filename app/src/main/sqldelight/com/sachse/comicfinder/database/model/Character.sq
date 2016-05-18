@@ -1,0 +1,21 @@
+CREATE TABLE character (
+    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    description TEXT,
+    resourceURI TEXT,
+    thumbnail TEXT
+);
+
+select_all:
+select *
+from character;
+
+select_by_name:
+select *
+from character
+where character.name = ?;
+
+select_by_id:
+select *
+from character
+where character._id = ?;

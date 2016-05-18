@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ComicFinder.iml" filepath="$PROJECT_DIR$/ComicFinder.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sqldelight-gradle-plugin/sqldelight-gradle-plugin.iml" filepath="$PROJECT_DIR$/sqldelight-gradle-plugin/sqldelight-gradle-plugin.iml" />
     </modules>
   </component>
 </project>

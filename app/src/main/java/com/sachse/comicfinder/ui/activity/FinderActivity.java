@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.api.API;
 import com.sachse.comicfinder.ui.BaseActivity;
 
 public class FinderActivity extends BaseActivity {
@@ -29,7 +28,7 @@ public class FinderActivity extends BaseActivity {
 			  final String query = mSearchField.getText().toString();
 
 			  Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-			  intent.putExtra(API.SEARCH_QUERY, query);
+//						intent.putExtra(API.SEARCH_QUERY, bundle);
 			  startActivityForResult(intent, 0);
 
 			  overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -37,6 +36,7 @@ public class FinderActivity extends BaseActivity {
 		  }
 	  });
   }
+
 
 
 }

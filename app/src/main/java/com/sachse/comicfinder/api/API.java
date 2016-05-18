@@ -15,7 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class API {
+public class  API {
 	public static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
 	public static final String SEARCH_QUERY = "SEARCH_QUERY";
 

@@ -10,24 +10,21 @@ import android.widget.TextView;
 
 import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.database.model.Character;
-import com.sachse.comicfinder.api.models.Comic;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ComicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	private static final int TYPE_HEADER = 0;
 	private static final int TYPE_ITEM = 1;
 
-	private List<Comic> mComics;
 	private Context mContext;
-	private Character mCharacter;
+	private List<Character> mCharacters;
 
-	public ComicsAdapter(Context context, Character character, List<Comic> comics){
+	public CharacterAdapter(Context context, List<Character> characters){
 		super();
 		mContext = context;
-		mCharacter = character;
-		mComics = comics;
+		mCharacters = characters;
 	}
 
 	@Override
@@ -48,26 +45,20 @@ public class ComicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 		if (holder instanceof ViewHolder) {
 			final ViewHolder view = ((ViewHolder)holder);
 
-			final String resourcePath = mComics.get(position).images.get(0).getResourcePath();
-			view.mTextView.setText(mComics.get(position).title);
+			final String resourcePath = mCharacters.get(position).getThumbnailResourcePath();
+			view.mTextView.setText(mCharacters.get(position).name());
 			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
-		} else if (holder instanceof ViewHolderHeader) {
-			final ViewHolderHeader view = ((ViewHolderHeader)holder);
-
-			final String resourcePath = mCharacter.thumbnail.getResourcePath();
-			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mHeroIV);
-			view.mDescriptionTV.setText(mCharacter.description);
 		}
 	}
 
 	@Override
 	public int getItemCount() {
-		return mComics.size();
+		return mCharacters.size();
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return mComics.get(position).id;
+		return mCharacters.get(position).id;
 	}
 
 	@Override
@@ -76,10 +67,6 @@ public class ComicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 			return TYPE_HEADER;
 
 		return TYPE_ITEM;
-	}
-
-	public void setComics(List<Comic> comics){
-		mComics = comics;
 	}
 
 	private boolean isPositionHeader(int position) {
