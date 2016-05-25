@@ -54,9 +54,9 @@ public class ComicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 		} else if (holder instanceof ViewHolderHeader) {
 			final ViewHolderHeader view = ((ViewHolderHeader)holder);
 
-			final String resourcePath = mCharacter.thumbnail.getResourcePath();
+			final String resourcePath = mCharacter.resourceURI();
 			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mHeroIV);
-			view.mDescriptionTV.setText(mCharacter.description);
+			view.mDescriptionTV.setText(mCharacter.description());
 		}
 	}
 

@@ -2,8 +2,7 @@ CREATE TABLE character (
     _id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     description TEXT,
-    resourceURI TEXT,
-    thumbnail TEXT
+    resourceURI TEXT
 );
 
 select_all:

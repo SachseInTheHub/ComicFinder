@@ -1,59 +1,27 @@
 package com.sachse.comicfinder.database.model;
 
-
 import android.support.annotation.Nullable;
 
-import com.sachse.comicfinder.api.models.Thumbnail;
-import com.sachse.comicfinder.api.models.Url;
+public class Character implements CharacterModel {
 
-import java.util.List;
+	public final Long id;
+	public final String name;
+	public final String description;
+	public final String resourceURI;
+//	public final String thumbnail;
 
-public class Character implements CharacterModel{
-
-	public int id;
-	public String name;
-	public String description;
-	public String resourceURI;
-	public List<Url> urls;
-	public Thumbnail thumbnail;
-
-	public int getId() {
-		return id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getResourceURI() {
-		return resourceURI;
-	}
-
-	public List<Url> getUrls() {
-		return urls;
-	}
-
-	public Thumbnail getThumbnail() {
-		return thumbnail;
-	}
-
-	public Character(Character character) {
-		id = character.id;
-		name = character.name;
-		description = character.description;
-		resourceURI = character.resourceURI;
-		urls = character.urls;
-		thumbnail = new Thumbnail(character.thumbnail);
-	}
-
-	public String getThumbnailResourcePath() {
-		return thumbnail.getResourcePath();
+	public Character(Long id, String name, String description, String resourceURI, String thumbnail){
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.resourceURI = resourceURI;
+//		this.thumbnail = thumbnail;
 	}
 
 	@Nullable
 	@Override
 	public Long _id() {
-		return (long)id;
+		return id;
 	}
 
 	@Nullable
@@ -72,12 +40,6 @@ public class Character implements CharacterModel{
 	@Override
 	public String resourceURI() {
 		return resourceURI;
-	}
-
-	@Nullable
-	@Override
-	public String thumbnail() {
-		return thumbnail.getResourcePath();
 	}
 
 	public static final class Marshal extends CharacterMarshal<Marshal>{

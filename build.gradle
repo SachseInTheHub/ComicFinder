@@ -2,6 +2,9 @@
 
 buildscript {
     repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         jcenter()
     }
     dependencies {
@@ -9,16 +12,19 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.squareup.sqldelight:gradle-plugin:0.3.2'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
     }
 }
 
 apply plugin: 'com.squareup.sqldelight'
+apply plugin: "net.ltgt.apt"
 
 allprojects {
     repositories {
         jcenter()
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

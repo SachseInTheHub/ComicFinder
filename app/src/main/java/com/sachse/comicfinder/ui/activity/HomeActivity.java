@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.database.model.Character;
 import com.sachse.comicfinder.ui.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
