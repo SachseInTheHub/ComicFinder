@@ -80,7 +80,7 @@ public class ResultActivity extends BaseActivity {
 					}
 					CharacterAdapter adapter = new CharacterAdapter(getApplicationContext(), characters);
 					mComicsRV.setAdapter(adapter);
-					final Cursor charactersCursor = mDb.rawQuery(Character.SELECT_ALL,null);
+					final Cursor charactersCursor = mDb.rawQuery(Character.SELECT_ALL, new String[0]);
 					while (charactersCursor.moveToNext()) {
 						String name = charactersCursor.getString(charactersCursor.getColumnIndex(CharacterModel.NAME));
 						Log.d("DB - ", ""+name);
