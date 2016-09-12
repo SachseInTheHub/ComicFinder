@@ -45,8 +45,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 		if (holder instanceof ViewHolder) {
 			final ViewHolder view = ((ViewHolder)holder);
 
-			final String resourcePath = mCharacters.get(position).resourceURI();
-			view.mTextView.setText(mCharacters.get(position).name());
+			final String resourcePath = mCharacters.get(position).getResourceURI();
+			view.mTextView.setText(mCharacters.get(position).getName());
 			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
 		}
 	}
@@ -58,7 +58,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 	@Override
 	public long getItemId(int position) {
-		return mCharacters.get(position)._id();
+		return mCharacters.get(position).getId();
 	}
 
 	@Override
