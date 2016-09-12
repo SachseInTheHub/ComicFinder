@@ -1,7 +1,5 @@
 package com.sachse.comicfinder.ui.activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +10,7 @@ import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.api.models.CharacterDataWrapper;
 import com.sachse.comicfinder.api.models.Comic;
 import com.sachse.comicfinder.api.models.ComicDataWrapper;
-import com.sachse.comicfinder.database.DatabaseManager;
 import com.sachse.comicfinder.database.model.Character;
-import com.sachse.comicfinder.database.model.CharacterModel;
 import com.sachse.comicfinder.ui.BaseActivity;
 import com.sachse.comicfinder.ui.views.CharacterAdapter;
 import com.sachse.comicfinder.ui.views.ComicsAdapter;
@@ -31,7 +27,6 @@ public class ResultActivity extends BaseActivity {
 	public RecyclerView mComicsRV;
 	public ComicsAdapter mComicsAdapter;
 	public RecyclerView.LayoutManager mComicsLayoutManager;
-	private SQLiteDatabase mDb;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,8 +38,6 @@ public class ResultActivity extends BaseActivity {
 		mComicsLayoutManager = new LinearLayoutManager(this);
 		mComicsRV.setLayoutManager(mComicsLayoutManager);
 		performCall("");
-
-		mDb = DatabaseManager.getInstance(this).getReadableDatabase();
 
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
@@ -62,7 +55,7 @@ public class ResultActivity extends BaseActivity {
 			@Override
 			public void onResponse(Call<CharacterDataWrapper> call, Response<CharacterDataWrapper> response) {
 
-				if (response.isSuccess()) {
+				if (response.isSuccessful()) {
 					CharacterDataWrapper characterDataWrapper = new CharacterDataWrapper(response.body());
 					final int size = characterDataWrapper.data.results.size();
 
@@ -72,19 +65,19 @@ public class ResultActivity extends BaseActivity {
 
 						characters.add(character);
 
-						mDb.insert(Character.TABLE_NAME, null, new Character.Marshal()
-								.name(character.name())
-								.description(character.description())
-								.resourceURI(character.resourceURI())
-								.asContentValues());
+//						mDb.insert(Character.TABLE_NAME, null, new Character.Marshal()
+//								.name(character.name())
+//								.description(character.description())
+//								.resourceURI(character.resourceURI())
+//								.asContentValues());
 					}
 					CharacterAdapter adapter = new CharacterAdapter(getApplicationContext(), characters);
 					mComicsRV.setAdapter(adapter);
-					final Cursor charactersCursor = mDb.rawQuery(Character.SELECT_ALL,null);
-					while (charactersCursor.moveToNext()) {
-						String name = charactersCursor.getString(charactersCursor.getColumnIndex(CharacterModel.NAME));
-						Log.d("DB - ", ""+name);
-					}
+//					final Cursor charactersCursor = mDb.rawQuery(Character.SELECT_ALL, new String[0]);
+//					while (charactersCursor.moveToNext()) {
+//						String name = charactersCursor.getString(charactersCursor.getColumnIndex(CharacterModel.NAME));
+//						Log.d("DB - ", ""+name);
+//					}
 				}
 			}
 
@@ -96,7 +89,7 @@ public class ResultActivity extends BaseActivity {
 		});
 	}
 	private void populateView(Character character){
-		getSupportActionBar().setTitle(character.name());
+//		getSupportActionBar().setTitle(character.getName());
 
 	}
 

@@ -1,50 +1,35 @@
 package com.sachse.comicfinder.database.model;
 
-import android.support.annotation.Nullable;
+import io.realm.RealmObject;
 
-public class Character implements CharacterModel {
+public class Character extends RealmObject {
 
-	public final Long id;
-	public final String name;
-	public final String description;
-	public final String resourceURI;
+    public  Long _id;
+    public String name;
+    public String description;
+    public String resourceURI;
 //	public final String thumbnail;
 
-	public Character(Long id, String name, String description, String resourceURI, String thumbnail){
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.resourceURI = resourceURI;
-//		this.thumbnail = thumbnail;
-	}
+    public Long getId() {
+        return _id;
+    }
 
-	@Nullable
-	@Override
-	public Long _id() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Nullable
-	@Override
-	public String name() {
-		return name;
-	}
 
-	@Nullable
-	@Override
-	public String description() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@Nullable
-	@Override
-	public String resourceURI() {
-		return resourceURI;
-	}
+    public String getResourceURI() {
+        return resourceURI;
+    }
 
-	public static final class Marshal extends CharacterMarshal<Marshal>{
-		public Marshal(){
-			super();
-		}
-	}
+    public long _id() {
+        return _id;
+    }
+
+
 }
