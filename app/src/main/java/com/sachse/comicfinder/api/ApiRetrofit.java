@@ -1,6 +1,8 @@
 package com.sachse.comicfinder.api;
 
 import com.sachse.comicfinder.BuildConfig;
+import com.sachse.comicfinder.api.models.CharacterDataWrapper;
+import com.sachse.comicfinder.api.models.ComicDataWrapper;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -14,10 +16,14 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import rx.Observable;
 
-public class API {
-    public static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
+public class ApiRetrofit {
     public static final String SEARCH_QUERY = "SEARCH_QUERY";
+    public static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
 
     public static Retrofit getRetrofit() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -26,7 +32,7 @@ public class API {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 HttpUrl originalHttpUrl = original.url();
-                String timestamp = API.getTimestamp();
+                String timestamp = ApiRetrofit.getTimestamp();
 
                 HttpUrl.Builder builder = originalHttpUrl.newBuilder()
                         .addQueryParameter("ts", timestamp)
@@ -80,5 +86,17 @@ public class API {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public interface Call {
+
+        @GET("characters")
+        Observable<CharacterDataWrapper> getAllCharacters(@Query("limit") int limit, @Query("offset") int offset);
+
+        @GET("characters")
+        Observable<CharacterDataWrapper> getCharacterByName(@Query("name") String name);
+
+        @GET("characters/{characterId}/comics")
+        Observable<ComicDataWrapper> getCharacterComics(@Path("characterId") int characterId, @Query("format") String format, @Query("orderBy") String orderBy);
     }
 }

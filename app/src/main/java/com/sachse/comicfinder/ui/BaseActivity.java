@@ -6,22 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.BuildConfig;
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.api.API;
-import com.sachse.comicfinder.api.ApiCall;
 
 import timber.log.Timber;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
 
-	public ApiCall mApiCall;
+	private BasePresenter presenter;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mApiCall = API.getRetrofit().create(ApiCall.class);
 		if (BuildConfig.DEBUG) {
 			Timber.plant(new Timber.DebugTree());
 		}
