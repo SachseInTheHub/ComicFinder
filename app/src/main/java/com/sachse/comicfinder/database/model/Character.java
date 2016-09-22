@@ -1,14 +1,14 @@
 package com.sachse.comicfinder.database.model;
 
-import io.realm.RealmObject;
+import com.sachse.comicfinder.api.models.Thumbnail;
 
-public class Character extends RealmObject {
+public class Character {
 
-    public  Long _id;
+    public Long _id;
     public String name;
     public String description;
     public String resourceURI;
-//	public final String thumbnail;
+	public Thumbnail thumbnail;
 
     public Long getId() {
         return _id;
@@ -17,7 +17,6 @@ public class Character extends RealmObject {
     public String getName() {
         return name;
     }
-
 
     public String getDescription() {
         return description;
@@ -31,5 +30,6 @@ public class Character extends RealmObject {
         return _id;
     }
 
+    public Thumbnail getThumbnail(){ return thumbnail; }
 
 }

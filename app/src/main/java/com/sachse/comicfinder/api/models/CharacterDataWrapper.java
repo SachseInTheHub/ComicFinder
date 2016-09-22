@@ -1,5 +1,7 @@
 package com.sachse.comicfinder.api.models;
 
+import com.sachse.comicfinder.database.model.Character;
+
 public class CharacterDataWrapper {
 
 	public int code;
@@ -18,4 +20,7 @@ public class CharacterDataWrapper {
 		data = body.data;
 	}
 
+	public Character getCharacter(){
+		return data.results.get(0);
+	}
 }

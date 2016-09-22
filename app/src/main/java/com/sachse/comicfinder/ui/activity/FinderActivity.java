@@ -8,35 +8,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sachse.comicfinder.R;
+import com.sachse.comicfinder.result.ResultActivity;
 import com.sachse.comicfinder.ui.BaseActivity;
 
 public class FinderActivity extends BaseActivity {
 
-	public EditText mSearchField;
+    public EditText mSearchField;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-	  super.onCreate(savedInstanceState);
-	  setContentView(R.layout.activity_finder);
-	  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-	  setSupportActionBar(toolbar);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_finder);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-	  mSearchField = (EditText) findViewById(R.id.search_et);
-	  mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-		  @Override
-		  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-			  final String query = mSearchField.getText().toString();
+        mSearchField = (EditText) findViewById(R.id.search_et);
+        mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                final String query = mSearchField.getText().toString();
 
-			  Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-//						intent.putExtra(API.SEARCH_QUERY, bundle);
-			  startActivityForResult(intent, 0);
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+//						intent.putExtra(ApiRetrofit.SEARCH_QUERY, bundle);
+                startActivityForResult(intent, 0);
 
-			  overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-			  return false;
-		  }
-	  });
-  }
-
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return false;
+            }
+        });
+    }
 
 
 }
