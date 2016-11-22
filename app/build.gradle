@@ -18,6 +18,7 @@ android {
     }
 
     buildTypes {
+
         debug {
             buildConfigField "String", "MARVEL_PUBLIC_KEY", getKey("PUBLIC")
             buildConfigField "String", "MARVEL_PRIVATE_KEY", getKey("PRIVATE")
@@ -27,6 +28,24 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/test/java', 'build/generated/source/buildConfig/debug']
+        }
+
+        test {
+            java.srcDirs = ['build/generated/source/buildConfig/debug']
+        }
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+            }
+        }
     }
 }
 
@@ -64,18 +83,25 @@ dependencies {
 
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile 'junit:junit:4.12'
+
+    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    compile 'org.mockito:mockito-core:1.10.19'
+    compile 'junit:junit:4.12'
 }
 
-
 def getKey(String keyType) {
-    if (keyType.equals("PUBLIC") && System.getenv("MARVEL_PUBLIC_KEY") != null)
+    if (keyType.equals("PUBLIC") && System.getenv("MARVEL_PUBLIC_KEY") != null) {
         return System.getenv("MARVEL_PUBLIC_KEY")
-    else if (keyType.equals("PRIVATE") && System.getenv("MARVEL_PRIVATE_KEY") != null)
+    } else if (keyType.equals("PRIVATE") && System.getenv("MARVEL_PRIVATE_KEY") != null) {
         return System.getenv("MARVEL_PRIVATE_KEY")
-    else
+    } else {
         return ""
+    }
 }
 
 task pushAppToDevice(type: Exec, dependsOn: 'installDebug') {
-    commandLine 'adb', 'shell', 'am', 'start', '-n', 'com.sachse.comicfinder/com.sachse.comicfinder.ui.activity.FinderActivity'
+    commandLine 'adb', 'shell', 'am', 'start', '-n',
+            'com.sachse.comicfinder/com.sachse.comicfinder.ui.activity.FinderActivity'
 }

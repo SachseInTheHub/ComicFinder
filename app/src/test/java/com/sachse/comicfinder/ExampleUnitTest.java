@@ -1,16 +1,15 @@
 package com.sachse.comicfinder;
 
-import org.junit.Test;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
-/**
- * To work on unit tests, switch the Test Artifact in the Build Variants view.
- */
+@RunWith(MockitoJUnitRunner.class)
 public class ExampleUnitTest {
 
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    @Before public void setUp() throws Exception {
+        assertTrue(!BuildConfig.MARVEL_PRIVATE_KEY.equals(BuildConfig.MARVEL_PUBLIC_KEY));
     }
 }
