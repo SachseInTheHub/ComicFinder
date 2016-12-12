@@ -6,23 +6,23 @@ public class Character {
 
     public Long _id;
     public String name;
-    public String description;
-    public String resourceURI;
-	public Thumbnail thumbnail;
+    public java.lang.String description;
+    public java.lang.String resourceURI;
+    public Thumbnail thumbnail;
 
     public Long getId() {
         return _id;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public String getDescription() {
+    public java.lang.String getDescription() {
         return description;
     }
 
-    public String getResourceURI() {
+    public java.lang.String getResourceURI() {
         return resourceURI;
     }
 
@@ -30,6 +30,7 @@ public class Character {
         return _id;
     }
 
-    public Thumbnail getThumbnail(){ return thumbnail; }
-
+    public Thumbnail getThumbnail() {
+        return thumbnail;
+    }
 }

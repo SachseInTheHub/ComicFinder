@@ -2,13 +2,14 @@ package com.sachse.comicfinder.home;
 
 import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.api.CharacterService;
+import com.sachse.comicfinder.api.models.Thumbnail;
 import com.sachse.comicfinder.database.model.Character;
 
-import rx.Observable;
 import rx.Scheduler;
 import timber.log.Timber;
 
 public class HomePresenter extends BasePresenter<HomePresenter.View> {
+
     private final Scheduler uiScheduler;
     private final CharacterService characterService;
 
@@ -19,23 +20,32 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
 
     @Override
     public void onViewAttached(View view) {
-        addSubscription(characterService.getCharacterByName("gambit")
+        // spider-man
+        // hulk
+        // thor
+        // iron man
+        addSubscription(characterService.getCharacterByName("thor")
                 .observeOn(uiScheduler)
                 .subscribe(characterDataWrapper -> {
-                    if (characterDataWrapper.getCharacter() != null) {
-                        Timber.e("got character");
-                        view.showCharacter(characterDataWrapper.getCharacter());
+                    Character character = characterDataWrapper.getCharacter();
+                    if (character != null) {
+                        view.showCharacterName(character.getName());
+                        view.showCharacterThumbnail(character.getThumbnail());
+
+                        String description = character.getDescription();
+                        if (!description.isEmpty()) {
+                            view.showCharacterDescription(description);
+                        }
                     }
                 }, throwable -> {
-                    Timber.e(throwable, "Failed to get car status");
+                    Timber.e(throwable, "Failed to get character");
                 }));
     }
 
     public interface View {
-        Observable<Void> onCharacterClicked();
 
-        void showCharacter(Character character);
-
-        void goToResults();
+        void showCharacterName(String characterName);
+        void showCharacterThumbnail(Thumbnail characterThumbnail);
+        void showCharacterDescription(String description);
     }
 }

@@ -1,74 +1,58 @@
 package com.sachse.comicfinder.home;
 
+import com.memoizrlabs.Shank;
+import com.sachse.comicfinder.R;
+import com.sachse.comicfinder.api.models.Thumbnail;
+import com.sachse.comicfinder.ui.BaseActivity;
+import com.squareup.picasso.Picasso;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.view.RxView;
-import com.memoizrlabs.Shank;
-import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.api.ApiCharacterService;
-import com.sachse.comicfinder.api.models.CharacterDataWrapper;
-import com.sachse.comicfinder.database.model.Character;
-import com.sachse.comicfinder.ui.BaseActivity;
-import com.squareup.picasso.Picasso;
-
 import butterknife.BindView;
-import rx.Observable;
-import timber.log.Timber;
+import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements HomePresenter.View {
 
-    private ImageView mCharacterIV;
-    @BindView(R.id.character_name_tv) TextView mCharacterNameTV;
-    private Character mCharacter;
+    @BindView(R.id.character_name_tv) TextView characterNameTextView;
+    @BindView(R.id.character_thumbnail_iv) ImageView characterThumbnailImageView;
+    @BindView(R.id.character_description_tv) TextView characterDescriptionTextView;
+
     private HomePresenter presenter;
-    private ApiCharacterService apiCharacterService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
 
         presenter = Shank.provideSingleton(HomePresenter.class);
-        apiCharacterService = Shank.provideSingleton(ApiCharacterService.class);
-        mCharacterIV = (ImageView) findViewById(R.id.character_iv);
-        mCharacterNameTV = (TextView) findViewById(R.id.character_name_tv);
+        presenter.onViewAttached(this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        presenter.onViewDetached();
-    }
-
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         presenter.onViewAttached(this);
     }
 
-    @Override
-    public Observable<Void> onCharacterClicked() {
-        return RxView.clicks(mCharacterIV);
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        presenter.onViewDetached();
     }
 
-    @Override
-    public void showCharacter(Character character) {
-        mCharacterNameTV.setText(character.getName());
-        Timber.d(character.getThumbnail().getResourcePath());
-        Picasso.with(getApplicationContext()).load(character.getThumbnail().getResourcePath()).into(mCharacterIV);
+    @Override public void showCharacterName(String characterName) {
+        characterNameTextView.setText(characterName);
     }
 
-    @Override
-    public void goToResults() {
-        Observable<CharacterDataWrapper> allCharacters = apiCharacterService.getAllCharacters();
+    @Override public void showCharacterThumbnail(Thumbnail characterThumbnail) {
+        Picasso.with(getApplicationContext())
+                .load(characterThumbnail.getResourcePath())
+                .into(characterThumbnailImageView);
+    }
 
-
-//        Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-//        startActivityForResult(intent, 0);
-//        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    @Override public void showCharacterDescription(String description) {
+        characterDescriptionTextView.setText(description);
     }
 }

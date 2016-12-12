@@ -48,13 +48,13 @@ public class ComicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 		if (holder instanceof ViewHolder) {
 			final ViewHolder view = ((ViewHolder)holder);
 
-			final String resourcePath = mComics.get(position).images.get(0).getResourcePath();
+			final java.lang.String resourcePath = mComics.get(position).images.get(0).getResourcePath();
 			view.mTextView.setText(mComics.get(position).title);
 			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
 		} else if (holder instanceof ViewHolderHeader) {
 			final ViewHolderHeader view = ((ViewHolderHeader)holder);
 
-//			final String resourcePath = mCharacter.resourceURI();
+//			final Character resourcePath = mCharacter.resourceURI();
 //			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mHeroIV);
 //			view.mDescriptionTV.setText(mCharacter.description());
 		}

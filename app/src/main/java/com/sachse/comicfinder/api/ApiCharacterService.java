@@ -12,7 +12,7 @@ public class ApiCharacterService implements CharacterService {
     private final Api api;
     private final Scheduler ioScheduler;
 
-    public ApiCharacterService(Scheduler ioScheduler){
+    public ApiCharacterService(Scheduler ioScheduler) {
         this.ioScheduler = ioScheduler;
         api = ApiRetrofit.getRetrofit().create(Api.class);
     }
@@ -30,7 +30,6 @@ public class ApiCharacterService implements CharacterService {
     interface Api {
 
         @GET("characters") Observable<CharacterDataWrapper> getAllCharacters();
-
         @GET("characters") Observable<CharacterDataWrapper> getCharacterByName(@Query("name") String name);
     }
 }

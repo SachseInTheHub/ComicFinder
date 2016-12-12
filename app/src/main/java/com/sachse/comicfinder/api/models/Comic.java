@@ -9,7 +9,7 @@ public class Comic {
 //	public double issueNumber;
 	public String variantDescription;
 	public String description;
-//	public String modifiedSince;
+//	public Character modifiedSince;
 	public String isbn;
 	public String upc;
 	public String diamondCode;
@@ -21,17 +21,17 @@ public class Comic {
 	public String resourceURI;
 	public List<Url> urls;
 
-//	public List<String> variants;
-//	public List<String> collections;
-//	public List<String> collectedIssues;
-//	public List<String> dates;
-//	public List<String> prices;
+//	public List<Character> variants;
+//	public List<Character> collections;
+//	public List<Character> collectedIssues;
+//	public List<Character> dates;
+//	public List<Character> prices;
 	public Thumbnail thumbnail;
 	public List<Image> images;
-//	public String creators;
-//	public String characters;
-//	public String stories;
-//	public String events;
+//	public Character creators;
+//	public Character characters;
+//	public Character stories;
+//	public Character events;
 
 	public Comic(Comic body) {
 		id = body.id;
