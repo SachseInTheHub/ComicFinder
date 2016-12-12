@@ -4,15 +4,12 @@ import com.sachse.comicfinder.BuildConfig;
 import com.sachse.comicfinder.api.models.CharacterDataWrapper;
 import com.sachse.comicfinder.api.models.ComicDataWrapper;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -27,28 +24,25 @@ public class ApiRetrofit {
 
     public static Retrofit getRetrofit() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
-                String timestamp = ApiRetrofit.getTimestamp();
+        httpClient.addInterceptor(chain -> {
+            Request original = chain.request();
+            HttpUrl originalHttpUrl = original.url();
+            String timestamp = ApiRetrofit.getTimestamp();
 
-                HttpUrl.Builder builder = originalHttpUrl.newBuilder()
-                        .addQueryParameter("ts", timestamp)
-                        .addQueryParameter("apikey", BuildConfig.MARVEL_PUBLIC_KEY)
-                        .addQueryParameter("hash", getMd5(timestamp + BuildConfig.MARVEL_PRIVATE_KEY + BuildConfig.MARVEL_PUBLIC_KEY));
+            HttpUrl.Builder builder = originalHttpUrl.newBuilder()
+                    .addQueryParameter("ts", timestamp)
+                    .addQueryParameter("apikey", BuildConfig.MARVEL_PUBLIC_KEY)
+                    .addQueryParameter("hash", getMd5(timestamp + BuildConfig.MARVEL_PRIVATE_KEY + BuildConfig.MARVEL_PUBLIC_KEY));
 
-                Request.Builder requestBuilder = original.newBuilder()
-                        .url(builder.build())
-                        .method(original.method(), original.body());
+            Request.Builder requestBuilder = original.newBuilder()
+                    .url(builder.build())
+                    .method(original.method(), original.body());
 
-                Request request = requestBuilder
-                        .addHeader("Accept", "application/json")
-                        .build();
+            Request request = requestBuilder
+                    .addHeader("Accept", "application/json")
+                    .build();
 
-                return chain.proceed(request);
-            }
+            return chain.proceed(request);
         });
 
         return new Retrofit.Builder()
@@ -72,7 +66,7 @@ public class ApiRetrofit {
             digest.update(s.getBytes());
             byte messageDigest[] = digest.digest();
 
-            // Create Hex String
+            // Create Hex Character
             StringBuilder hexString = new StringBuilder();
             for (byte aMessageDigest : messageDigest) {
                 String h = Integer.toHexString(0xFF & aMessageDigest);
