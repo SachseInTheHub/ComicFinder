@@ -1,26 +1,24 @@
 package com.sachse.comicfinder.home;
 
-import com.memoizrlabs.Shank;
-import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.api.models.Thumbnail;
-import com.sachse.comicfinder.ui.BaseActivity;
-import com.squareup.picasso.Picasso;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.memoizrlabs.Shank;
+import com.sachse.comicfinder.R;
+import com.sachse.comicfinder.ui.BaseActivity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements HomePresenter.View {
 
-    @BindView(R.id.character_name_tv) TextView characterNameTextView;
-    @BindView(R.id.character_thumbnail_iv) ImageView characterThumbnailImageView;
-    @BindView(R.id.character_description_tv) TextView characterDescriptionTextView;
+    @BindView(R.id.top_character_thumbnail) ImageView topCharacterThumbnail;
+    @BindView(R.id.middle_character_thumbnail) ImageView middleCharacterThumbnail;
+    @BindView(R.id.bottom_character_thumbnail) ImageView bottomCharacterThumbnail;
 
-    private HomePresenter presenter;
+    HomePresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +32,6 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
 
     @Override protected void onResume() {
         super.onResume();
-        presenter.onViewAttached(this);
     }
 
     @Override protected void onDestroy() {
@@ -43,16 +40,11 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     }
 
     @Override public void showCharacterName(String characterName) {
-        characterNameTextView.setText(characterName);
     }
 
-    @Override public void showCharacterThumbnail(Thumbnail characterThumbnail) {
+    @Override public void showCharacterThumbnail(String thumbnailResourcePath) {
         Picasso.with(getApplicationContext())
-                .load(characterThumbnail.getResourcePath())
-                .into(characterThumbnailImageView);
-    }
-
-    @Override public void showCharacterDescription(String description) {
-        characterDescriptionTextView.setText(description);
+                .load(thumbnailResourcePath)
+                .into(topCharacterThumbnail);
     }
 }

@@ -3,8 +3,7 @@ package com.sachse.comicfinder.result;
 import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.api.CharacterService;
 import com.sachse.comicfinder.api.models.CharacterDataWrapper;
-import com.sachse.comicfinder.database.model.Character;
-import com.sachse.comicfinder.ui.ComicFinderApplication;
+import com.sachse.comicfinder.model.Character;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class ResultPresenter extends BasePresenter<ResultPresenter.View> {
                     public void onNext(CharacterDataWrapper characterDataWrapper) {
 
                         final List<Character> characters = new ArrayList<>();
-                        Realm realm = ComicFinderApplication.realm;
+                        Realm realm = Realm.getDefaultInstance();
 
                         for (int i = 0; i < 100; i++) {
                             final Character character = characterDataWrapper.data.results.get(i);

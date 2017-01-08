@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.database.model.Character;
+import com.sachse.comicfinder.model.Character;
 import com.sachse.comicfinder.ui.BaseActivity;
 import com.sachse.comicfinder.ui.views.CharacterAdapter;
 import com.sachse.comicfinder.ui.views.ComicsAdapter;

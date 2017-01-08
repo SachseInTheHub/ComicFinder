@@ -1,51 +1,50 @@
 package com.sachse.comicfinder.home;
 
 import com.sachse.comicfinder.BasePresenter;
-import com.sachse.comicfinder.api.CharacterService;
-import com.sachse.comicfinder.api.models.Thumbnail;
-import com.sachse.comicfinder.database.model.Character;
+import com.sachse.comicfinder.repository.DataRepository;
 
 import rx.Scheduler;
 import timber.log.Timber;
 
 public class HomePresenter extends BasePresenter<HomePresenter.View> {
 
+    private final DataRepository dataRepository;
     private final Scheduler uiScheduler;
-    private final CharacterService characterService;
+    private final Scheduler ioScheduler;
 
-    public HomePresenter(final CharacterService characterService, final Scheduler uiScheduler) {
-        this.characterService = characterService;
+    public HomePresenter(DataRepository dataRepository, Scheduler uiScheduler, Scheduler ioScheduler) {
+        this.dataRepository = dataRepository;
         this.uiScheduler = uiScheduler;
+        this.ioScheduler = ioScheduler;
     }
 
     @Override
     public void onViewAttached(View view) {
-        // spider-man
-        // hulk
-        // thor
-        // iron man
-        addSubscription(characterService.getCharacterByName("thor")
+        addSubscription(dataRepository.fetchCharacter("thor")
                 .observeOn(uiScheduler)
-                .subscribe(characterDataWrapper -> {
-                    Character character = characterDataWrapper.getCharacter();
+                .subscribe(character -> {
+                    if (character != null) {
+                        Timber.d("do nothing for now");
+                    }
+                }, throwable -> Timber.d("error showing character info :" + throwable.getMessage())));
+
+
+        addSubscription(dataRepository.onDataRefresh()
+                .subscribeOn(uiScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(character -> {
+                    Timber.d("onDataRefresh " + Thread.currentThread());
                     if (character != null) {
                         view.showCharacterName(character.getName());
-                        view.showCharacterThumbnail(character.getThumbnail());
-
-                        String description = character.getDescription();
-                        if (!description.isEmpty()) {
-                            view.showCharacterDescription(description);
-                        }
+                        view.showCharacterThumbnail(character.getThumbnailResourcePath());
                     }
-                }, throwable -> {
-                    Timber.e(throwable, "Failed to get character");
-                }));
+                }, throwable -> Timber.d("onDataRefresh :" + throwable.getMessage())));
     }
 
     public interface View {
 
         void showCharacterName(String characterName);
-        void showCharacterThumbnail(Thumbnail characterThumbnail);
-        void showCharacterDescription(String description);
+
+        void showCharacterThumbnail(String thumbnailResourcePath);
     }
 }

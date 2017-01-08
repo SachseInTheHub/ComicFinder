@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bpblack"
+    android:orientation="vertical">
 
-    <include layout="@layout/v_character"/>
+    <ImageView
+        android:id="@+id/top_character_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/character_hero_thumbnail"
+        android:layout_gravity="center"
+        android:scaleType="matrix" />
+
+    <ImageView
+        android:id="@+id/middle_character_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/character_hero_thumbnail"
+        android:layout_gravity="center"
+        android:scaleType="centerInside" />
+
+    <ImageView
+        android:id="@+id/bottom_character_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/character_hero_thumbnail"
+        android:layout_gravity="center"
+        android:scaleType="centerInside" />
 
 </LinearLayout>

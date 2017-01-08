@@ -1,4 +1,8 @@
-package com.sachse.comicfinder.api.models;
+package com.sachse.comicfinder.api.models.comic;
+
+import com.sachse.comicfinder.api.models.TextObjects;
+import com.sachse.comicfinder.api.models.Thumbnail;
+import com.sachse.comicfinder.api.models.Url;
 
 import java.util.List;
 
@@ -27,7 +31,7 @@ public class Comic {
 //	public List<Character> dates;
 //	public List<Character> prices;
 	public Thumbnail thumbnail;
-	public List<Image> images;
+//	public List<Image> images;
 //	public Character creators;
 //	public Character characters;
 //	public Character stories;
@@ -45,6 +49,6 @@ public class Comic {
 		resourceURI = body.resourceURI;
 		urls = body.urls;
 		thumbnail = body.thumbnail;
-		images = body.images;
+//		images = body.images;
 	}
 }

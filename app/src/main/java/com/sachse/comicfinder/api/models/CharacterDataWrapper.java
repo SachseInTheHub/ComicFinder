@@ -1,6 +1,6 @@
 package com.sachse.comicfinder.api.models;
 
-import com.sachse.comicfinder.database.model.Character;
+import com.sachse.comicfinder.model.Character;
 
 public class CharacterDataWrapper {
 
