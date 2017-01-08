@@ -7,24 +7,24 @@ import com.memoizrlabs.ShankModuleInitializer;
 import com.sachse.comicfinder.di.ApplicationShankModule;
 import com.sachse.comicfinder.di.PresenterShankModule;
 import com.sachse.comicfinder.di.ServiceModule;
+import com.sachse.comicfinder.di.StorageShankModule;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ComicFinderApplication extends Application {
-    public static Realm realm;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getApplicationContext()).build();
-        Realm.setDefaultConfiguration(realmConfig);
-//        realm = Realm.getDefaultInstance();
-
         ShankModuleInitializer.initializeModules(new ApplicationShankModule(this),
-                        new ServiceModule(),
-                        new PresenterShankModule());
+                new ServiceModule(),
+                new PresenterShankModule(),
+                new StorageShankModule());
+
+        RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext()).build();
+        Realm.setDefaultConfiguration(config);
     }
 
     public static ComicFinderApplication from(Context context) {

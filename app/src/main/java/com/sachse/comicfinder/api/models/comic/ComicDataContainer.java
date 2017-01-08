@@ -1,4 +1,4 @@
-package com.sachse.comicfinder.api.models;
+package com.sachse.comicfinder.api.models.comic;
 
 import java.util.List;
 

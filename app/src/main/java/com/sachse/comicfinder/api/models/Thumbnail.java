@@ -1,17 +1,33 @@
 package com.sachse.comicfinder.api.models;
 
-public class Thumbnail {
+import io.realm.RealmObject;
 
-	public String path;
-	public String extension;
+public class Thumbnail extends RealmObject {
 
-	public Thumbnail(Thumbnail thumbnail) {
-		path = thumbnail.path;
-		extension = thumbnail.extension;
-	}
+    private String path;
+    private String extension;
 
-	public String getResourcePath(){
-		return path + "." + extension;
-	}
+    public Thumbnail() {
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public String getResourcePath() {
+        return path + "." + extension;
+    }
 }
 

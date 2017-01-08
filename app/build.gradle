@@ -5,7 +5,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion '25.0.1'
 
     defaultConfig {
         applicationId "com.sachse.comicfinder"
@@ -14,30 +14,14 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "MARVEL_PUBLIC_KEY", getKey("PUBLIC")
+        buildConfigField "String", "MARVEL_PRIVATE_KEY", getKey("PRIVATE")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-
-        debug {
-            buildConfigField "String", "MARVEL_PUBLIC_KEY", getKey("PUBLIC")
-            buildConfigField "String", "MARVEL_PRIVATE_KEY", getKey("PRIVATE")
-        }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    sourceSets {
-        main {
-            java.srcDirs = ['src/main/java', 'src/test/java', 'build/generated/source/buildConfig/debug']
-        }
-
-        test {
-            java.srcDirs = ['build/generated/source/buildConfig/debug']
-        }
     }
 
     testOptions {
@@ -47,49 +31,45 @@ android {
             }
         }
     }
+    dependencies {
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+
+        compile "com.android.support:appcompat-v7:$rootProject.supportLibVersion"
+        compile "com.android.support:cardview-v7:$rootProject.supportLibVersion"
+        compile "com.android.support:support-v4:$rootProject.supportLibVersion"
+        compile "com.android.support:recyclerview-v7:$rootProject.supportLibVersion"
+
+        compile 'com.squareup.picasso:picasso:2.5.2'
+        compile 'com.squareup.okhttp3:okhttp:3.4.1'
+        compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+        compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+        compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+
+        compile "io.reactivex:rxjava:$rootProject.rxVersion"
+        compile 'io.reactivex:rxandroid:1.2.1'
+        compile 'io.reactivex:rxjava:1.1.6'
+
+
+        apt 'com.jakewharton:butterknife-compiler:8.2.1'
+        compile 'com.jakewharton:butterknife:8.2.1'
+        compile 'com.jakewharton.timber:timber:4.2.0'
+        compile "com.jakewharton.rxbinding:rxbinding:0.4.0"
+
+        compile 'se.emilsjolander:StickyScrollViewItems:1.1.0'
+
+        compile 'com.code-troopers.betterpickers:library:3.0.0'
+        compile 'com.github.memoizr:shank:v1.3.1'
+
+        testCompile 'junit:junit:4.12'
+        testCompile "org.mockito:mockito-core:2.+"
+
+        androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+        androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+        androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+        androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    }
 }
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    compile "com.android.support:appcompat-v7:$rootProject.supportLibVersion"
-    compile "com.android.support:cardview-v7:$rootProject.supportLibVersion"
-    compile "com.android.support:support-v4:$rootProject.supportLibVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.supportLibVersion"
-
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
-
-    compile "io.reactivex:rxjava:$rootProject.rxVersion"
-
-    compile 'com.jakewharton:butterknife:8.2.1'
-    compile 'com.jakewharton.timber:timber:4.2.0'
-
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile "com.jakewharton.rxbinding:rxbinding:0.4.0"
-
-    compile 'se.emilsjolander:StickyScrollViewItems:1.1.0'
-    compile 'com.code-troopers.betterpickers:library:3.0.0'
-    compile 'com.github.memoizr:shank:v1.3.1'
-
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
-
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'junit:junit:4.12'
-
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
-    compile 'org.mockito:mockito-core:1.10.19'
-    compile 'junit:junit:4.12'
-}
 
 def getKey(String keyType) {
     if (keyType.equals("PUBLIC") && System.getenv("MARVEL_PUBLIC_KEY") != null) {
@@ -103,5 +83,5 @@ def getKey(String keyType) {
 
 task pushAppToDevice(type: Exec, dependsOn: 'installDebug') {
     commandLine 'adb', 'shell', 'am', 'start', '-n',
-            'com.sachse.comicfinder/com.sachse.comicfinder.ui.activity.FinderActivity'
+            'com.sachse.comicfinder/com.sachse.comicfinder.home.HomeActivity'
 }

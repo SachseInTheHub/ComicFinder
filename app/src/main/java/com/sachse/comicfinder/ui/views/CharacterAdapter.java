@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.database.model.Character;
+import com.sachse.comicfinder.model.Character;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

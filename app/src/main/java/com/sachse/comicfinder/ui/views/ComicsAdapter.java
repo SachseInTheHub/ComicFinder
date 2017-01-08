@@ -9,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.database.model.Character;
-import com.sachse.comicfinder.api.models.Comic;
-import com.squareup.picasso.Picasso;
+import com.sachse.comicfinder.model.Character;
+import com.sachse.comicfinder.api.models.comic.Comic;
 
 import java.util.List;
 
@@ -48,9 +47,9 @@ public class ComicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 		if (holder instanceof ViewHolder) {
 			final ViewHolder view = ((ViewHolder)holder);
 
-			final java.lang.String resourcePath = mComics.get(position).images.get(0).getResourcePath();
-			view.mTextView.setText(mComics.get(position).title);
-			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
+//			final java.lang.String resourcePath = mComics.get(position).images.get(0).getResourcePath();
+//			view.mTextView.setText(mComics.get(position).title);
+//			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
 		} else if (holder instanceof ViewHolderHeader) {
 			final ViewHolderHeader view = ((ViewHolderHeader)holder);
 

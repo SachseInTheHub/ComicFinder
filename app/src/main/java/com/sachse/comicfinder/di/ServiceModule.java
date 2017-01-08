@@ -13,8 +13,10 @@ public class ServiceModule implements ShankModule {
 
     @Override
     public void registerFactories() {
-        registerFactory(ApiCharacterService.class, () -> new ApiCharacterService(Shank.named("io").provideSingleton(Scheduler.class)));
-        registerFactory(CharacterService.class,() -> new ApiCharacterService(Shank.named("io").provideSingleton(Scheduler.class)));
-    }
+        registerFactory(ApiCharacterService.class, () -> new ApiCharacterService(
+                Shank.named("io").provideSingleton(Scheduler.class)));
 
+        registerFactory(CharacterService.class,() -> new ApiCharacterService(
+                Shank.named("io").provideSingleton(Scheduler.class)));
+    }
 }

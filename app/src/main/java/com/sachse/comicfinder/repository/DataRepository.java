@@ -1,0 +1,53 @@
+package com.sachse.comicfinder.repository;
+
+import com.sachse.comicfinder.api.CharacterService;
+import com.sachse.comicfinder.api.models.CharacterDataWrapper;
+import com.sachse.comicfinder.io.FileStorage;
+import com.sachse.comicfinder.model.Character;
+
+import rx.Observable;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+
+public class DataRepository implements ResultService {
+
+    private final FileStorage fileStorage;
+    private final CharacterService characterService;
+    private final Scheduler ioScheduler;
+
+    public DataRepository(FileStorage fileStorage, CharacterService characterService, Scheduler ioScheduler) {
+        this.fileStorage = fileStorage;
+        this.characterService = characterService;
+        this.ioScheduler = ioScheduler;
+    }
+
+    public Observable<Character> fetchCharacter(String characterName) {
+        final Character character = fetchCharacterFromDB(characterName);
+
+        if (character != null) {
+            return Observable.just(character);
+        } else {
+            fetchCharacterFromAPI(characterName);
+            return Observable.empty();
+        }
+    }
+
+    @Override
+    public Character fetchCharacterFromDB(String characterName) {
+        return fileStorage.getCharacter(characterName);
+    }
+
+    @Override
+    public void fetchCharacterFromAPI(String characterName) {
+        characterService.getCharacterByName(characterName)
+                .subscribeOn(ioScheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(CharacterDataWrapper::getCharacter)
+                .subscribe(fileStorage::storeCharacter);
+    }
+
+    @Override
+    public Observable<Character> onDataRefresh() {
+        return fileStorage.onDataChanged();
+    }
+}
