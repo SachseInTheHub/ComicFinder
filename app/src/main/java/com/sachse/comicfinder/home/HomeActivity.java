@@ -1,5 +1,7 @@
 package com.sachse.comicfinder.home;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.ui.BaseActivity;
@@ -7,16 +9,20 @@ import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 public class HomeActivity extends BaseActivity implements HomePresenter.View {
 
-    @BindView(R.id.top_character_thumbnail) ImageView topCharacterThumbnail;
-    @BindView(R.id.middle_character_thumbnail) ImageView middleCharacterThumbnail;
-    @BindView(R.id.bottom_character_thumbnail) ImageView bottomCharacterThumbnail;
+    @BindView(R.id.textview_character_name) TextView characterNameView;
+    @BindView(R.id.imageview_character_thumbnail) ImageView characterThumbnailView;
+    @BindView(R.id.textview_character_description) TextView characterDescriptionView;
+    @BindView(R.id.edittext_search) EditText searchCharacterView;
 
     HomePresenter presenter;
 
@@ -39,12 +45,21 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
         presenter.onViewDetached();
     }
 
+    @Override public Observable<TextViewTextChangeEvent> onSearchClicked() {
+        return RxTextView.textChangeEvents(searchCharacterView).filter(textViewTextChangeEvent -> textViewTextChangeEvent.text().length() >= 3);
+    }
+
     @Override public void showCharacterName(final String characterName) {
+        characterNameView.setText(characterName.toUpperCase());
     }
 
     @Override public void showCharacterThumbnail(final String thumbnailResourcePath) {
         Picasso.with(getApplicationContext())
                 .load(thumbnailResourcePath)
-                .into(topCharacterThumbnail);
+                .into(characterThumbnailView);
+    }
+
+    @Override public void showCharacterDescription(String description) {
+        characterDescriptionView.setText(description);
     }
 }

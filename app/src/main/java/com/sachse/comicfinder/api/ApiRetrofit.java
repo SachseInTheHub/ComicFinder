@@ -14,8 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 final class ApiRetrofit {
 
-    private static final String SEARCH_QUERY = "SEARCH_QUERY";
-    private static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
+    static final String SEARCH_QUERY = "SEARCH_QUERY";
+    static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
 
     private ApiRetrofit() {
     }

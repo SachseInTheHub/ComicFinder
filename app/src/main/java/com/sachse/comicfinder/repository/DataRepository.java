@@ -45,7 +45,8 @@ public class DataRepository implements ResultService {
                 .subscribeOn(ioScheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CharacterDataWrapper::getCharacter)
-                .subscribe(fileStorage::storeCharacter);
+                .doOnError(Throwable::printStackTrace)
+                .subscribe(fileStorage::storeCharacter, Throwable::printStackTrace);
     }
 
     @Override
