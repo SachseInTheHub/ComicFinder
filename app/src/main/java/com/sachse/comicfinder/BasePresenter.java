@@ -13,7 +13,7 @@ public abstract class BasePresenter<T> {
         subscriptions.clear();
     }
 
-    public void addSubscription(Subscription subscribe) {
+    public void addSubscription(final Subscription subscribe) {
         subscriptions.add(subscribe);
     }
 }

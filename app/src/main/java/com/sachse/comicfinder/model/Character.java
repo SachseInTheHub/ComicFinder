@@ -17,25 +17,27 @@ public class Character extends RealmObject {
     public Character() {
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    public void setResourceURI(String resourceURI) {
+    public void setResourceURI(final String resourceURI) {
         this.resourceURI = resourceURI;
     }
 
-    public void setThumbnail(Thumbnail thumbnail) { this.thumbnail = thumbnail; }
+    public void setThumbnail(final Thumbnail thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
-    public void setThumbnailResourcePath(String thumbnailResourcePath) {
+    public void setThumbnailResourcePath(final String thumbnailResourcePath) {
         this.thumbnailResourcePath = thumbnailResourcePath;
     }
 

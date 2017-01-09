@@ -12,11 +12,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiRetrofit {
-    public static final String SEARCH_QUERY = "SEARCH_QUERY";
-    public static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
+final class ApiRetrofit {
 
-    public static Retrofit getRetrofit() {
+    private static final String SEARCH_QUERY = "SEARCH_QUERY";
+    private static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
+
+    private ApiRetrofit() {
+    }
+
+    static Retrofit getRetrofit() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
@@ -26,7 +30,8 @@ public class ApiRetrofit {
             HttpUrl.Builder builder = originalHttpUrl.newBuilder()
                     .addQueryParameter("ts", timestamp)
                     .addQueryParameter("apikey", BuildConfig.MARVEL_PUBLIC_KEY)
-                    .addQueryParameter("hash", getMd5(timestamp + BuildConfig.MARVEL_PRIVATE_KEY + BuildConfig.MARVEL_PUBLIC_KEY));
+                    .addQueryParameter("hash",
+                            getMd5(timestamp + BuildConfig.MARVEL_PRIVATE_KEY + BuildConfig.MARVEL_PUBLIC_KEY));
 
             Request.Builder requestBuilder = original.newBuilder()
                     .url(builder.build())
@@ -53,23 +58,22 @@ public class ApiRetrofit {
     }
 
     private static String getMd5(final String s) {
-        final String MD5 = "MD5";
         try {
             // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance(MD5);
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
             digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
+            byte[] messageDigest = digest.digest();
 
             // Create Hex Character
             StringBuilder hexString = new StringBuilder();
             for (byte aMessageDigest : messageDigest) {
                 String h = Integer.toHexString(0xFF & aMessageDigest);
-                while (h.length() < 2)
+                while (h.length() < 2) {
                     h = "0" + h;
+                }
                 hexString.append(h);
             }
             return hexString.toString();
-
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

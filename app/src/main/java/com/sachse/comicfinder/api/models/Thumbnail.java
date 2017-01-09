@@ -14,7 +14,7 @@ public class Thumbnail extends RealmObject {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -22,7 +22,7 @@ public class Thumbnail extends RealmObject {
         return extension;
     }
 
-    public void setExtension(String extension) {
+    public void setExtension(final String extension) {
         this.extension = extension;
     }
 

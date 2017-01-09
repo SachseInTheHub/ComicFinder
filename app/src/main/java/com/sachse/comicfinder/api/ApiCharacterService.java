@@ -12,7 +12,7 @@ public class ApiCharacterService implements CharacterService {
     private final Api api;
     private final Scheduler ioScheduler;
 
-    public ApiCharacterService(Scheduler ioScheduler) {
+    public ApiCharacterService(final Scheduler ioScheduler) {
         this.ioScheduler = ioScheduler;
         api = ApiRetrofit.getRetrofit().create(Api.class);
     }
@@ -23,7 +23,7 @@ public class ApiCharacterService implements CharacterService {
     }
 
     @Override
-    public Observable<CharacterDataWrapper> getCharacterByName(String name) {
+    public Observable<CharacterDataWrapper> getCharacterByName(final String name) {
         return api.getCharacterByName(name).subscribeOn(ioScheduler);
     }
 

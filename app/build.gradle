@@ -3,6 +3,8 @@ apply plugin: 'realm-android'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
+apply from: '../checkstyle.gradle'
+
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.1'

@@ -16,7 +16,7 @@ public class ServiceModule implements ShankModule {
         registerFactory(ApiCharacterService.class, () -> new ApiCharacterService(
                 Shank.named("io").provideSingleton(Scheduler.class)));
 
-        registerFactory(CharacterService.class,() -> new ApiCharacterService(
+        registerFactory(CharacterService.class, () -> new ApiCharacterService(
                 Shank.named("io").provideSingleton(Scheduler.class)));
     }
 }
