@@ -1,0 +1,16 @@
+apply plugin: 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    description 'Performs checks on code based on checkstyle config file provided by the gradle property'
+    configFile file("../config/checkstyle.xml")
+    source 'src/main/java'
+    classpath = files()
+    include '**/*.java'
+    exclude '**/gen/**'
+}
+
+checkstyle{
+    configProperties = [
+            'checkstyle.cache.file': rootProject.file('build/checkstyle.cache'),
+    ]
+}

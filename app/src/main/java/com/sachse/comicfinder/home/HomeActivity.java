@@ -1,13 +1,13 @@
 package com.sachse.comicfinder.home;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.widget.ImageView;
-
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +21,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     HomePresenter presenter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
@@ -39,10 +39,10 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
         presenter.onViewDetached();
     }
 
-    @Override public void showCharacterName(String characterName) {
+    @Override public void showCharacterName(final String characterName) {
     }
 
-    @Override public void showCharacterThumbnail(String thumbnailResourcePath) {
+    @Override public void showCharacterThumbnail(final String thumbnailResourcePath) {
         Picasso.with(getApplicationContext())
                 .load(thumbnailResourcePath)
                 .into(topCharacterThumbnail);

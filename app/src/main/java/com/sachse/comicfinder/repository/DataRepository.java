@@ -15,13 +15,15 @@ public class DataRepository implements ResultService {
     private final CharacterService characterService;
     private final Scheduler ioScheduler;
 
-    public DataRepository(FileStorage fileStorage, CharacterService characterService, Scheduler ioScheduler) {
+    public DataRepository(final FileStorage fileStorage,
+            final CharacterService characterService,
+            final Scheduler ioScheduler) {
         this.fileStorage = fileStorage;
         this.characterService = characterService;
         this.ioScheduler = ioScheduler;
     }
 
-    public Observable<Character> fetchCharacter(String characterName) {
+    public Observable<Character> fetchCharacter(final String characterName) {
         final Character character = fetchCharacterFromDB(characterName);
 
         if (character != null) {
@@ -33,12 +35,12 @@ public class DataRepository implements ResultService {
     }
 
     @Override
-    public Character fetchCharacterFromDB(String characterName) {
+    public Character fetchCharacterFromDB(final String characterName) {
         return fileStorage.getCharacter(characterName);
     }
 
     @Override
-    public void fetchCharacterFromAPI(String characterName) {
+    public void fetchCharacterFromAPI(final String characterName) {
         characterService.getCharacterByName(characterName)
                 .subscribeOn(ioScheduler)
                 .observeOn(AndroidSchedulers.mainThread())

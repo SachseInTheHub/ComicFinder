@@ -4,14 +4,14 @@ import com.sachse.comicfinder.model.Character;
 
 public class CharacterDataWrapper {
 
-    public int code;
-    public java.lang.String status;
-    public java.lang.String copyright;
-    public java.lang.String attributionText;
-    public java.lang.String attributionHTML;
-    public CharacterDataContainer data;
+    private int code;
+    private String status;
+    private String copyright;
+    private String attributionText;
+    private String attributionHTML;
+    private CharacterDataContainer data;
 
-    public CharacterDataWrapper(CharacterDataWrapper body) {
+    public CharacterDataWrapper(final CharacterDataWrapper body) {
         code = body.code;
         status = body.status;
         copyright = body.copyright;

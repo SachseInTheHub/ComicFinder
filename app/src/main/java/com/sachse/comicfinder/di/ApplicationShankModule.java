@@ -1,8 +1,8 @@
 package com.sachse.comicfinder.di;
 
-import android.content.Context;
-
 import com.memoizrlabs.ShankModule;
+
+import android.content.Context;
 
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
@@ -15,7 +15,7 @@ public class ApplicationShankModule implements ShankModule {
 
     private Context context;
 
-    public ApplicationShankModule(Context context) {
+    public ApplicationShankModule(final Context context) {
         this.context = context;
     }
 

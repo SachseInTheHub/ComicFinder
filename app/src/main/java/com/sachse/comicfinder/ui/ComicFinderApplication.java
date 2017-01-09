@@ -1,13 +1,13 @@
 package com.sachse.comicfinder.ui;
 
-import android.app.Application;
-import android.content.Context;
-
 import com.memoizrlabs.ShankModuleInitializer;
 import com.sachse.comicfinder.di.ApplicationShankModule;
 import com.sachse.comicfinder.di.PresenterShankModule;
 import com.sachse.comicfinder.di.ServiceModule;
 import com.sachse.comicfinder.di.StorageShankModule;
+
+import android.app.Application;
+import android.content.Context;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -27,7 +27,7 @@ public class ComicFinderApplication extends Application {
         Realm.setDefaultConfiguration(config);
     }
 
-    public static ComicFinderApplication from(Context context) {
+    public static ComicFinderApplication from(final Context context) {
         if (context instanceof ComicFinderApplication) {
             return (ComicFinderApplication) context;
         } else {

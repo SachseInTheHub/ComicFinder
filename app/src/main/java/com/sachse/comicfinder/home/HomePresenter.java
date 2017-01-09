@@ -12,14 +12,16 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
     private final Scheduler uiScheduler;
     private final Scheduler ioScheduler;
 
-    public HomePresenter(DataRepository dataRepository, Scheduler uiScheduler, Scheduler ioScheduler) {
+    public HomePresenter(final DataRepository dataRepository,
+            final Scheduler uiScheduler,
+            final Scheduler ioScheduler) {
         this.dataRepository = dataRepository;
         this.uiScheduler = uiScheduler;
         this.ioScheduler = ioScheduler;
     }
 
     @Override
-    public void onViewAttached(View view) {
+    public void onViewAttached(final View view) {
         addSubscription(dataRepository.fetchCharacter("thor")
                 .observeOn(uiScheduler)
                 .subscribe(character -> {
@@ -27,7 +29,6 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
                         Timber.d("do nothing for now");
                     }
                 }, throwable -> Timber.d("error showing character info :" + throwable.getMessage())));
-
 
         addSubscription(dataRepository.onDataRefresh()
                 .subscribeOn(uiScheduler)

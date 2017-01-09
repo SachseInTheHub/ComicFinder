@@ -13,7 +13,7 @@ public class FileStorage {
     public FileStorage() {
     }
 
-    public void storeCharacter(Character character) {
+    public void storeCharacter(final Character character) {
         Realm defaultInstance = Realm.getDefaultInstance();
         defaultInstance.executeTransaction(realmTransaction -> {
             Character characterRealm = realmTransaction.createObject(Character.class);
@@ -25,13 +25,13 @@ public class FileStorage {
         });
     }
 
-    public Character getCharacter(String characterName) {
+    public Character getCharacter(final String characterName) {
         Character character = Realm.getDefaultInstance()
                 .where(Character.class)
                 .equalTo("name", characterName)
                 .findFirst();
 
-        if(character != null){
+        if (character != null) {
             dataSubject.onNext(character);
         }
 

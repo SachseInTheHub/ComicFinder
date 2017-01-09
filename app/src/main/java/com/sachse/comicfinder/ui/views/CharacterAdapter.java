@@ -1,5 +1,9 @@
 package com.sachse.comicfinder.ui.views;
 
+import com.sachse.comicfinder.R;
+import com.sachse.comicfinder.model.Character;
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,92 +12,92 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.model.Character;
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-	private static final int TYPE_HEADER = 0;
-	private static final int TYPE_ITEM = 1;
 
-	private Context mContext;
-	private List<Character> mCharacters;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
-	public CharacterAdapter(Context context, List<Character> characters){
-		super();
-		mContext = context;
-		mCharacters = characters;
-	}
+    private Context mContext;
+    private List<Character> mCharacters;
 
-	@Override
-	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		if (viewType == TYPE_ITEM) {
-			View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.v_comic, parent, false);
-			return new ViewHolder(v);
-		} else if (viewType == TYPE_HEADER) {
-			View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.v_result_header, parent, false);
-			return new ViewHolderHeader(v);
-		}
+    public CharacterAdapter(final Context context, final List<Character> characters) {
+        super();
+        mContext = context;
+        mCharacters = characters;
+    }
 
-		return null;
-	}
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        if (viewType == TYPE_ITEM) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.v_comic, parent, false);
+            return new ViewHolder(v);
+        } else if (viewType == TYPE_HEADER) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.v_result_header, parent, false);
+            return new ViewHolderHeader(v);
+        }
 
-	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-		if (holder instanceof ViewHolder) {
-			final ViewHolder view = ((ViewHolder)holder);
+        return null;
+    }
 
-			final java.lang.String resourcePath = mCharacters.get(position).getResourceURI();
-			view.mTextView.setText(mCharacters.get(position).getName());
-			Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
-		}
-	}
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof ViewHolder) {
+            final ViewHolder view = ((ViewHolder) holder);
 
-	@Override
-	public int getItemCount() {
-		return mCharacters.size();
-	}
+            final java.lang.String resourcePath = mCharacters.get(position).getResourceURI();
+            view.mTextView.setText(mCharacters.get(position).getName());
+            Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
+        }
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return mCharacters.get(position).getId();
-	}
+    @Override
+    public int getItemCount() {
+        return mCharacters.size();
+    }
 
-	@Override
-	public int getItemViewType(int position) {
-		if (isPositionHeader(position))
-			return TYPE_HEADER;
+    @Override
+    public long getItemId(final int position) {
+        return mCharacters.get(position).getId();
+    }
 
-		return TYPE_ITEM;
-	}
+    @Override
+    public int getItemViewType(final int position) {
+        if (isPositionHeader(position)) {
+            return TYPE_HEADER;
+        }
 
-	private boolean isPositionHeader(int position) {
-		return position == 0;
-	}
+        return TYPE_ITEM;
+    }
 
-	static class ViewHolder extends RecyclerView.ViewHolder {
-		public TextView mTextView;
-		public ImageView mImageView;
+    private boolean isPositionHeader(final int position) {
+        return position == 0;
+    }
 
-		public ViewHolder(View v) {
-			super(v);
-			mImageView = (ImageView) v.findViewById(R.id.comic_cover_iv);
-			mTextView = (TextView) v.findViewById(R.id.comic_title_tv);
-		}
-	}
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-	static class ViewHolderHeader extends RecyclerView.ViewHolder {
-		public TextView mTitleTV;
-		public TextView mDescriptionTV;
-		public ImageView mHeroIV;
+        public TextView mTextView;
+        public ImageView mImageView;
 
-		public ViewHolderHeader(View v) {
-			super(v);
-			mTitleTV = (TextView) v.findViewById(R.id.result_title_tv);
-			mDescriptionTV = (TextView) v.findViewById(R.id.result_description_tv);
-			mHeroIV = (ImageView) v.findViewById(R.id.result_hero_iv);
-		}
-	}
+        public ViewHolder(final View v) {
+            super(v);
+            mImageView = (ImageView) v.findViewById(R.id.comic_cover_iv);
+            mTextView = (TextView) v.findViewById(R.id.comic_title_tv);
+        }
+    }
+
+    static class ViewHolderHeader extends RecyclerView.ViewHolder {
+
+        public TextView mTitleTV;
+        public TextView mDescriptionTV;
+        public ImageView mHeroIV;
+
+        public ViewHolderHeader(final View v) {
+            super(v);
+            mTitleTV = (TextView) v.findViewById(R.id.result_title_tv);
+            mDescriptionTV = (TextView) v.findViewById(R.id.result_description_tv);
+            mHeroIV = (ImageView) v.findViewById(R.id.result_hero_iv);
+        }
+    }
 }
