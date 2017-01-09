@@ -3,5 +3,21 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="character_hero_thumbnail">250dp</dimen>
+    <dimen name="character_hero_thumbnail">230dp</dimen>
+    <dimen name="character_name">30sp</dimen>
+    <dimen name="character_description">21sp</dimen>
+
+    <dimen name="grid_1x">4dp</dimen>
+    <dimen name="grid_2x">8dp</dimen>
+    <dimen name="grid_2.5x">10dp</dimen>
+    <dimen name="grid_3x">12dp</dimen>
+    <dimen name="grid_4x">16dp</dimen>
+    <dimen name="grid_5x">20dp</dimen>
+    <dimen name="grid_5_5x">22dp</dimen>
+    <dimen name="grid_6x">24dp</dimen>
+    <dimen name="grid_6_5x">26dp</dimen>
+    <dimen name="grid_7x">28dp</dimen>
+    <dimen name="grid_8x">32dp</dimen>
+    <dimen name="grid_9x">36dp</dimen>
+    <dimen name="grid_10x">40dp</dimen>
 </resources>

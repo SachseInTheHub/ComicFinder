@@ -1,8 +1,10 @@
 package com.sachse.comicfinder.home;
 
+import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.repository.DataRepository;
 
+import rx.Observable;
 import rx.Scheduler;
 import timber.log.Timber;
 
@@ -22,7 +24,14 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
 
     @Override
     public void onViewAttached(final View view) {
-        addSubscription(dataRepository.fetchCharacter("thor")
+        addSubscription(view.onSearchClicked()
+                .subscribe(textViewTextChangeEvent -> {
+                    String characterSearch = textViewTextChangeEvent.text().toString();
+                    Timber.d("search for " + characterSearch);
+                    dataRepository.fetchCharacter(characterSearch);
+                }));
+
+        addSubscription(dataRepository.fetchCharacter("hulk")
                 .observeOn(uiScheduler)
                 .subscribe(character -> {
                     if (character != null) {
@@ -38,14 +47,17 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
                     if (character != null) {
                         view.showCharacterName(character.getName());
                         view.showCharacterThumbnail(character.getThumbnailResourcePath());
+                        view.showCharacterDescription(character.getDescription());
                     }
                 }, throwable -> Timber.d("onDataRefresh :" + throwable.getMessage())));
     }
 
     public interface View {
 
-        void showCharacterName(String characterName);
+        Observable<TextViewTextChangeEvent> onSearchClicked();
 
+        void showCharacterName(String characterName);
         void showCharacterThumbnail(String thumbnailResourcePath);
+        void showCharacterDescription(String description);
     }
 }
