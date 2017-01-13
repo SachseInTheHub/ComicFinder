@@ -16,8 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "MARVEL_PUBLIC_KEY", getKey("PUBLIC")
-        buildConfigField "String", "MARVEL_PRIVATE_KEY", getKey("PRIVATE")
+        buildConfigField "String", "KEY", getKey()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -46,6 +45,7 @@ android {
         compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
         compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
         compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+        compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
         compile "io.reactivex:rxjava:$rootProject.rxVersion"
         compile 'io.reactivex:rxandroid:1.2.1'
@@ -71,12 +71,9 @@ android {
     }
 }
 
-
-def getKey(String keyType) {
-    if (keyType.equals("PUBLIC") && System.getenv("MARVEL_PUBLIC_KEY") != null) {
-        return System.getenv("MARVEL_PUBLIC_KEY")
-    } else if (keyType.equals("PRIVATE") && System.getenv("MARVEL_PRIVATE_KEY") != null) {
-        return System.getenv("MARVEL_PRIVATE_KEY")
+def getKey() {
+    if (System.getenv("COMIC_VINE_KEY") != null) {
+        return System.getenv("COMIC_VINE_KEY")
     } else {
         return ""
     }

@@ -1,12 +1,14 @@
 package com.sachse.comicfinder.api;
 
-import com.sachse.comicfinder.api.models.CharacterDataWrapper;
+import com.sachse.comicfinder.api.models.Response;
 
 import rx.Observable;
 
 public interface CharacterService {
 
-    Observable<CharacterDataWrapper> getAllCharacters();
+    Observable<Response> getAllCharacters();
 
-    Observable<CharacterDataWrapper> getCharacterByName(String name);
+    Observable<Response> getCharacterByName(String name);
+
+    Observable<Response> getCharacterById(int characterId, String fields);
 }

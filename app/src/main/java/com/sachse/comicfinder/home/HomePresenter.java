@@ -1,6 +1,5 @@
 package com.sachse.comicfinder.home;
 
-import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.repository.DataRepository;
 
@@ -24,20 +23,21 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
 
     @Override
     public void onViewAttached(final View view) {
+
         addSubscription(view.onSearchClicked()
                 .subscribe(textViewTextChangeEvent -> {
-                    String characterSearch = textViewTextChangeEvent.text().toString();
+                    String characterSearch = textViewTextChangeEvent.toString();
                     Timber.d("search for " + characterSearch);
                     dataRepository.fetchCharacter(characterSearch);
                 }));
 
-        addSubscription(dataRepository.fetchCharacter("hulk")
-                .observeOn(uiScheduler)
-                .subscribe(character -> {
-                    if (character != null) {
-                        Timber.d("do nothing for now");
-                    }
-                }, throwable -> Timber.d("error showing character info :" + throwable.getMessage())));
+        //addSubscription(dataRepository.fetchAllCharactersFromApi()
+        //        .observeOn(uiScheduler)
+        //        .subscribe(character -> {
+        //            if (character != null) {
+        //                Timber.d("do nothing for now");
+        //            }
+        //        }, throwable -> Timber.d("error showing character info :" + throwable.getMessage())));
 
         addSubscription(dataRepository.onDataRefresh()
                 .subscribeOn(uiScheduler)
@@ -46,7 +46,7 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
                     Timber.d("onDataRefresh " + Thread.currentThread());
                     if (character != null) {
                         view.showCharacterName(character.getName());
-                        view.showCharacterThumbnail(character.getThumbnailResourcePath());
+                        view.showCharacterThumbnail(character.getImageMediumUrl());
                         view.showCharacterDescription(character.getDescription());
                     }
                 }, throwable -> Timber.d("onDataRefresh :" + throwable.getMessage())));
@@ -54,7 +54,7 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
 
     public interface View {
 
-        Observable<TextViewTextChangeEvent> onSearchClicked();
+        Observable<CharSequence> onSearchClicked();
 
         void showCharacterName(String characterName);
         void showCharacterThumbnail(String thumbnailResourcePath);

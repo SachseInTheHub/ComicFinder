@@ -1,24 +1,22 @@
 package com.sachse.comicfinder.model;
 
-import com.sachse.comicfinder.api.models.Thumbnail;
+import com.sachse.comicfinder.api.models.Image;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Character extends RealmObject {
 
-    private int id;
-    @PrimaryKey private String name;
+    @PrimaryKey
+    private String name;
     private String description;
-    private String resourceURI;
-    private Thumbnail thumbnail;
-    private String thumbnailResourcePath;
+    private String birth;
+    private Image image;
+    private String imageIconUrl;
+    private String imageMediumUrl;
+    private String imageSmallUrl;
 
     public Character() {
-    }
-
-    public void setId(final int id) {
-        this.id = id;
     }
 
     public void setName(final String name) {
@@ -29,20 +27,11 @@ public class Character extends RealmObject {
         this.description = description;
     }
 
-    public void setResourceURI(final String resourceURI) {
-        this.resourceURI = resourceURI;
-    }
-
-    public void setThumbnail(final Thumbnail thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public void setThumbnailResourcePath(final String thumbnailResourcePath) {
-        this.thumbnailResourcePath = thumbnailResourcePath;
-    }
-
-    public int getId() {
-        return id;
+    public void setImage(final Image image) {
+        this.image = image;
+        setImageIconUrl(image.getIconUrl());
+        setImageSmallUrl(image.getSmallUrl());
+        setImageMediumUrl(image.getMediumUrl());
     }
 
     public String getName() {
@@ -53,15 +42,35 @@ public class Character extends RealmObject {
         return description;
     }
 
-    public String getResourceURI() {
-        return resourceURI;
+    public String getImageIconUrl() {
+        return imageIconUrl = image.getIconUrl();
     }
 
-    public String getThumbnailResourcePath() {
-        return thumbnailResourcePath;
+    public String getImageMediumUrl() {
+        return imageMediumUrl = image.getMediumUrl();
     }
 
-    public Thumbnail getThumbnail() {
-        return thumbnail;
+    public String getImageSmallUrl() {
+        return image.getSmallUrl();
+    }
+
+    public void setImageIconUrl(String imageIconUrl) {
+        this.imageIconUrl = imageIconUrl;
+    }
+
+    public void setImageMediumUrl(String imageMediumUrl) {
+        this.imageMediumUrl = imageMediumUrl;
+    }
+
+    public void setImageSmallUrl(String imageSmallUrl) {
+        this.imageSmallUrl = imageSmallUrl;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 }

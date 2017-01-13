@@ -1,7 +1,6 @@
 package com.sachse.comicfinder.home;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.ui.BaseActivity;
@@ -45,8 +44,11 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
         presenter.onViewDetached();
     }
 
-    @Override public Observable<TextViewTextChangeEvent> onSearchClicked() {
-        return RxTextView.textChangeEvents(searchCharacterView).filter(textViewTextChangeEvent -> textViewTextChangeEvent.text().length() >= 3);
+    @Override public Observable<CharSequence> onSearchClicked() {
+
+        return RxTextView.textChanges(searchCharacterView)
+                .filter(t -> t.length() >= 6);
+
     }
 
     @Override public void showCharacterName(final String characterName) {

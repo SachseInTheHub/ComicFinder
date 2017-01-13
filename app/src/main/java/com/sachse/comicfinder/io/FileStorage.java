@@ -16,12 +16,8 @@ public class FileStorage {
     public void storeCharacter(final Character character) {
         Realm defaultInstance = Realm.getDefaultInstance();
         defaultInstance.executeTransaction(realmTransaction -> {
-            Character characterRealm = realmTransaction.createObject(Character.class);
-            characterRealm.setName(character.getName().toLowerCase());
-            characterRealm.setThumbnailResourcePath(character.getThumbnail().getResourcePath());
-            characterRealm.setDescription(character.getDescription());
-
-            dataSubject.onNext(characterRealm);
+            realmTransaction.copyToRealmOrUpdate(character);
+            dataSubject.onNext(character);
         });
     }
 

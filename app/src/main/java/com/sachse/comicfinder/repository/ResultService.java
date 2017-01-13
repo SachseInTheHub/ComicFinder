@@ -11,4 +11,6 @@ public interface ResultService {
     void fetchCharacterFromAPI(String characterName);
 
     Observable<Character> onDataRefresh();
+
+    Observable<Object> fetchAllCharactersFromApi();
 }
