@@ -1,8 +1,13 @@
 package com.sachse.comicfinder.io;
 
+import com.sachse.comicfinder.api.models.Image;
 import com.sachse.comicfinder.model.Character;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -16,8 +21,14 @@ public class FileStorage {
     public void storeCharacter(final Character character) {
         Realm defaultInstance = Realm.getDefaultInstance();
         defaultInstance.executeTransaction(realmTransaction -> {
-            realmTransaction.copyToRealmOrUpdate(character);
-            dataSubject.onNext(character);
+            Character realmCharacter = realmTransaction.createObject(Character.class);
+            realmCharacter.setName(character.getName());
+            realmCharacter.setBirth(character.getBirth());
+            Image image = realmTransaction.copyToRealm(character.getImage());
+            realmCharacter.setImage(image);
+            realmCharacter.setImageMediumUrl(image.getMediumUrl());
+
+            dataSubject.onNext(realmCharacter);
         });
     }
 
@@ -32,6 +43,13 @@ public class FileStorage {
         }
 
         return character;
+    }
+
+    public List<Character> getAllCharacters() {
+        RealmResults<Character> characterRealmResults = Realm.getDefaultInstance().where(Character.class).findAll();
+        List<Character> characters = new ArrayList<>();
+        characters.addAll(characterRealmResults);
+        return characters;
     }
 
     public Observable<Character> onDataChanged() {

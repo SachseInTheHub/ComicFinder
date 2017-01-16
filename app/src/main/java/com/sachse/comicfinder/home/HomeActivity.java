@@ -3,11 +3,14 @@ package com.sachse.comicfinder.home;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
+import com.sachse.comicfinder.landing.LandingActivity;
 import com.sachse.comicfinder.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     @BindView(R.id.imageview_character_thumbnail) ImageView characterThumbnailView;
     @BindView(R.id.textview_character_description) TextView characterDescriptionView;
     @BindView(R.id.edittext_search) EditText searchCharacterView;
+    @BindView(R.id.button) Button button;
 
     HomePresenter presenter;
 
@@ -33,6 +37,8 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
 
         presenter = Shank.provideSingleton(HomePresenter.class);
         presenter.onViewAttached(this);
+
+        button.setOnClickListener(view -> startActivity(new Intent(this, LandingActivity.class)));
     }
 
     @Override protected void onResume() {
@@ -45,10 +51,8 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     }
 
     @Override public Observable<CharSequence> onSearchClicked() {
-
         return RxTextView.textChanges(searchCharacterView)
                 .filter(t -> t.length() >= 6);
-
     }
 
     @Override public void showCharacterName(final String characterName) {

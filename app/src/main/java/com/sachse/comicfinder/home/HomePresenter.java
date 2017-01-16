@@ -31,7 +31,7 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
                     dataRepository.fetchCharacter(characterSearch);
                 }));
 
-        //addSubscription(dataRepository.fetchAllCharactersFromApi()
+        //addSubscription(dataRepository.fetchListOfCharactersFromApi()
         //        .observeOn(uiScheduler)
         //        .subscribe(character -> {
         //            if (character != null) {
@@ -46,7 +46,7 @@ public class HomePresenter extends BasePresenter<HomePresenter.View> {
                     Timber.d("onDataRefresh " + Thread.currentThread());
                     if (character != null) {
                         view.showCharacterName(character.getName());
-                        view.showCharacterThumbnail(character.getImageMediumUrl());
+                        view.showCharacterThumbnail(character.getImage().getMediumUrl());
                         view.showCharacterDescription(character.getDescription());
                     }
                 }, throwable -> Timber.d("onDataRefresh :" + throwable.getMessage())));

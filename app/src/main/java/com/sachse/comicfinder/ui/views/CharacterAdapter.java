@@ -46,7 +46,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (holder instanceof ViewHolder) {
             final ViewHolder view = ((ViewHolder) holder);
 
-            final java.lang.String resourcePath = mCharacters.get(position).getImageIconUrl();
+            final java.lang.String resourcePath = mCharacters.get(position).getImage().getMediumUrl();
             view.mTextView.setText(mCharacters.get(position).getName());
             Picasso.with(mContext.getApplicationContext()).load(resourcePath).into(view.mImageView);
         }

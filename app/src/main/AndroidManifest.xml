@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".landing.LandingActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".result.ResultActivity" />
+        <activity android:name=".home.HomeActivity" />
     </application>
 
 </manifest>

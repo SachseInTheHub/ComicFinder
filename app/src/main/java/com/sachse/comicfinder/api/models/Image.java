@@ -36,4 +36,24 @@ public class Image extends RealmObject {
     public String getTinyUrl() {
         return tinyUrl;
     }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public void setMediumUrl(String mediumUrl) {
+        this.mediumUrl = mediumUrl;
+    }
+
+    public void setSmallUrl(String smallUrl) {
+        this.smallUrl = smallUrl;
+    }
+
+    public void setSuperUrl(String superUrl) {
+        this.superUrl = superUrl;
+    }
+
+    public void setTinyUrl(String tinyUrl) {
+        this.tinyUrl = tinyUrl;
+    }
 }

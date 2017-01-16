@@ -1,13 +1,13 @@
 package com.sachse.comicfinder.repository;
 
 import com.sachse.comicfinder.api.CharacterService;
+import com.sachse.comicfinder.api.models.Response;
 import com.sachse.comicfinder.io.FileStorage;
 import com.sachse.comicfinder.model.Character;
 
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
 
 public class DataRepository implements ResultService {
 
@@ -29,7 +29,6 @@ public class DataRepository implements ResultService {
         if (character != null) {
             return Observable.just(character);
         } else {
-            fetchCharacterFromAPI(characterName);
             return Observable.empty();
         }
     }
@@ -40,12 +39,13 @@ public class DataRepository implements ResultService {
     }
 
     @Override
-    public void fetchCharacterFromAPI(final String characterName) {
+    public void fetchCharacterFromAPI(final int characterId) {
         String fields = String.format("%s,%s,%s,%s,%s", "name", "aliases", "birth", "power", "image");
-        characterService.getCharacterById(1699, fields)
+
+        characterService.getCharacterById(characterId, fields)
                 .subscribeOn(ioScheduler)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(response -> response.getResults())
+                .map(Response::getResults)
                 .doOnError(Throwable::printStackTrace)
                 .subscribe(fileStorage::storeCharacter, Throwable::printStackTrace);
     }
@@ -55,8 +55,11 @@ public class DataRepository implements ResultService {
         return fileStorage.onDataChanged();
     }
 
-    @Override public Observable<Object> fetchAllCharactersFromApi() {
-        characterService.getAllCharacters().subscribe(response -> Timber.d(response.getResults().getName()));
+    @Override public Observable<Object> fetchListOfCharactersFromApi(int[] charactersIds) {
+        for (int i = 0; i < charactersIds.length; i++) {
+            fetchCharacterFromAPI(charactersIds[i]);
+        }
+
         return Observable.empty();
     }
 }

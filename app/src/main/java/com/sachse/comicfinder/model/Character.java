@@ -28,10 +28,10 @@ public class Character extends RealmObject {
     }
 
     public void setImage(final Image image) {
-        this.image = image;
         setImageIconUrl(image.getIconUrl());
         setImageSmallUrl(image.getSmallUrl());
         setImageMediumUrl(image.getMediumUrl());
+        this.image = image;
     }
 
     public String getName() {
@@ -40,18 +40,6 @@ public class Character extends RealmObject {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getImageIconUrl() {
-        return imageIconUrl = image.getIconUrl();
-    }
-
-    public String getImageMediumUrl() {
-        return imageMediumUrl = image.getMediumUrl();
-    }
-
-    public String getImageSmallUrl() {
-        return image.getSmallUrl();
     }
 
     public void setImageIconUrl(String imageIconUrl) {
@@ -72,5 +60,21 @@ public class Character extends RealmObject {
 
     public void setBirth(String birth) {
         this.birth = birth;
+    }
+
+    public String getIconUrl() {
+        return imageIconUrl;
+    }
+
+    public String getMediumUrl() {
+        return imageMediumUrl;
+    }
+
+    public String getSmallUrl() {
+        return imageSmallUrl;
+    }
+
+    public Image getImage() {
+        return image;
     }
 }

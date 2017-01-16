@@ -8,9 +8,9 @@ public interface ResultService {
 
     Character fetchCharacterFromDB(String characterName);
 
-    void fetchCharacterFromAPI(String characterName);
+    void fetchCharacterFromAPI(int characterId);
 
     Observable<Character> onDataRefresh();
 
-    Observable<Object> fetchAllCharactersFromApi();
+    Observable<Object> fetchListOfCharactersFromApi(int[] charactersIds);
 }
