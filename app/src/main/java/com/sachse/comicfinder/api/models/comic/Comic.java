@@ -2,7 +2,6 @@ package com.sachse.comicfinder.api.models.comic;
 
 import com.sachse.comicfinder.api.models.TextObjects;
 import com.sachse.comicfinder.api.models.Thumbnail;
-import com.sachse.comicfinder.api.models.Url;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Comic {
     public int pageCount;
     public List<TextObjects> textObjects;
     public String resourceURI;
-    public List<Url> urls;
+    //public List<Url> urls;
 
     //public List<Character> variants;
     //public List<Character> collections;
@@ -46,7 +45,7 @@ public class Comic {
         description = body.description;
         isbn = body.isbn;
         resourceURI = body.resourceURI;
-        urls = body.urls;
+        //urls = body.urls;
         thumbnail = body.thumbnail;
         //modifiedSince = body.modifiedSince;
         //issueNumber = body.issueNumber;

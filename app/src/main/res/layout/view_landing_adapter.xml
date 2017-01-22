@@ -9,15 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ff0000"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textview_character_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
+        android:background="@color/bpTransparent_black"
+        android:ellipsize="end"
         android:paddingBottom="@dimen/grid_6x"
         android:paddingLeft="@dimen/grid_6x"
-        android:text="HULK" />
+        android:textSize="@dimen/landing_character_name" />
 
 </FrameLayout>

@@ -1,33 +1,31 @@
 package com.sachse.comicfinder.home;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.landing.LandingActivity;
 import com.sachse.comicfinder.ui.BaseActivity;
 import com.squareup.picasso.Picasso;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class HomeActivity extends BaseActivity implements HomePresenter.View {
 
+    private HomePresenter presenter;
+
+    private PublishSubject<String> characterSubject = PublishSubject.create();
+
     @BindView(R.id.textview_character_name) TextView characterNameView;
     @BindView(R.id.imageview_character_thumbnail) ImageView characterThumbnailView;
-    @BindView(R.id.textview_character_description) TextView characterDescriptionView;
-    @BindView(R.id.edittext_search) EditText searchCharacterView;
-    @BindView(R.id.button) Button button;
-
-    HomePresenter presenter;
+    @BindView(R.id.textview_character_dob) TextView characterDateOfBirth;
+    @BindView(R.id.textview_character_power) TextView characterPower;
+    @BindView(R.id.textview_character_aliases) TextView characterAliases;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -38,11 +36,10 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
         presenter = Shank.provideSingleton(HomePresenter.class);
         presenter.onViewAttached(this);
 
-        button.setOnClickListener(view -> startActivity(new Intent(this, LandingActivity.class)));
-    }
-
-    @Override protected void onResume() {
-        super.onResume();
+        String name = getIntent().getStringExtra("name");
+        if (name != null) {
+            characterSubject.onNext(name);
+        }
     }
 
     @Override protected void onDestroy() {
@@ -50,9 +47,8 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
         presenter.onViewDetached();
     }
 
-    @Override public Observable<CharSequence> onSearchClicked() {
-        return RxTextView.textChanges(searchCharacterView)
-                .filter(t -> t.length() >= 6);
+    @Override public Observable<String> fetchCharacterByName() {
+        return characterSubject.filter(name -> name != null);
     }
 
     @Override public void showCharacterName(final String characterName) {
@@ -65,7 +61,15 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
                 .into(characterThumbnailView);
     }
 
-    @Override public void showCharacterDescription(String description) {
-        characterDescriptionView.setText(description);
+    @Override public void showCharacterDateOfBirth(String birth) {
+        characterDateOfBirth.setText(birth);
+    }
+
+    @Override public void showCharacterPowers(String powers) {
+        characterPower.setText(powers);
+    }
+
+    @Override public void showCharacterAliases(String aliases) {
+        characterAliases.setText(aliases);
     }
 }

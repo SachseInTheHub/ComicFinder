@@ -19,8 +19,7 @@ public class PresenterShankModule implements ShankModule {
     public void registerFactories() {
         registerFactory(HomePresenter.class, () -> new HomePresenter(
                 provideSingleton(DataRepository.class),
-                named("ui").provideSingleton(Scheduler.class),
-                named("io").provideSingleton(Scheduler.class)));
+                named("ui").provideSingleton(Scheduler.class)));
 
         registerFactory(ResultPresenter.class, () -> new ResultPresenter(
                 provideSingleton(CharacterService.class),

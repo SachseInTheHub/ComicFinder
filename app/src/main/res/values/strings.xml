@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ComicFinder</string>
     <string name="action_settings">Settings</string>
+    <string name="name">Name</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="powers">Powers</string>
+    <string name="character_aliases">Aliases</string>
 </resources>

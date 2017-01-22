@@ -1,7 +1,9 @@
 package com.sachse.comicfinder.model;
 
 import com.sachse.comicfinder.api.models.Image;
+import com.sachse.comicfinder.api.models.Powers;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -11,6 +13,10 @@ public class Character extends RealmObject {
     private String name;
     private String description;
     private String birth;
+    private String aliases;
+
+    private RealmList<Powers> powers;
+
     private Image image;
     private String imageIconUrl;
     private String imageMediumUrl;
@@ -76,5 +82,29 @@ public class Character extends RealmObject {
 
     public Image getImage() {
         return image;
+    }
+
+    public String getAliases() {
+        return aliases.replace("\n", ", ");
+    }
+
+    public RealmList<Powers> getPowers() {
+        return powers;
+    }
+
+    public String getPowersList() {
+        StringBuilder characterPowerList = new StringBuilder();
+        for (Powers power : powers) {
+            characterPowerList.append(power.getName()).append(", ");
+        }
+        return characterPowerList.toString();
+    }
+
+    public void setPowers(RealmList<Powers> powers) {
+        this.powers = powers;
+    }
+
+    public void setAliases(String aliases) {
+        this.aliases = aliases;
     }
 }

@@ -3,41 +3,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bpLight_gray"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/grid_4x"
-    android:paddingRight="@dimen/grid_4x">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textview_character_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/bpWhite"
-        android:textSize="@dimen/character_name" />
-
-    <ImageView
+    <com.sachse.comicfinder.utils.TopCropImageView
         android:id="@+id/imageview_character_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/character_hero_thumbnail"
         android:layout_gravity="center"
         android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/textview_character_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/character_description" />
-
-    <EditText
-        android:id="@+id/edittext_search"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_4x"
-        android:textSize="@dimen/character_description" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="start"
+        android:paddingLeft="@dimen/grid_4x"
+        android:paddingRight="@dimen/grid_4x">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="LOAD"/>
+        <TextView
+            android:id="@+id/textview_character_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textColor="@color/bpblack"
+            android:textSize="@dimen/character_name"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/textview_character_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_character_name_title"
+            android:textColor="@color/bpblack" />
+
+        <TextView
+            android:id="@+id/textview_character_aliases_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_character_name"
+            android:text="@string/character_aliases"
+            android:textColor="@color/bpblack"
+            android:textSize="@dimen/character_name"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/textview_character_aliases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_character_aliases_title"
+            android:textColor="@color/bpblack" />
+
+        <TextView
+            android:id="@+id/textview_character_dob_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_character_aliases"
+            android:text="@string/dob"
+            android:textColor="@color/bpblack"
+            android:textSize="@dimen/character_name"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/textview_character_dob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_character_dob_title"
+            android:textColor="@color/bpblack" />
+
+        <TextView
+            android:id="@+id/textview_character_power_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_character_dob"
+            android:text="@string/powers"
+            android:textColor="@color/bpblack"
+            android:textSize="@dimen/character_name"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/textview_character_power"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bpblack"
+            android:layout_below="@+id/textview_character_power_title" />
+
+    </RelativeLayout>
 </LinearLayout>

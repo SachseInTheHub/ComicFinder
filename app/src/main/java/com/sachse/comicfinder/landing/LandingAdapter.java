@@ -16,12 +16,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class LandingAdapter extends RecyclerView.Adapter<LandingAdapter.ViewHolder> {
 
     private ArrayList<Character> characters;
+    private PublishSubject<LandingAdapter.ViewHolder> publishSubject = PublishSubject.create();
 
-    public LandingAdapter(List<Character> characters) {
+    public void setCharacters(List<Character> characters) {
         this.characters = new ArrayList<>();
         this.characters.addAll(characters);
     }
@@ -34,8 +37,10 @@ public class LandingAdapter extends RecyclerView.Adapter<LandingAdapter.ViewHold
     }
 
     @Override public void onBindViewHolder(LandingAdapter.ViewHolder holder, int position) {
+        holder.setCharacterId(position);
         holder.setCharacterName(characters.get(position).getName());
         holder.setCharacterImage(characters.get(position).getMediumUrl());
+        holder.itemView.setOnClickListener(view -> publishSubject.onNext(holder));
     }
 
     @Override public int getItemCount() {
@@ -46,7 +51,13 @@ public class LandingAdapter extends RecyclerView.Adapter<LandingAdapter.ViewHold
         this.characters.add(character);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public Observable<LandingAdapter.ViewHolder> onItemClicked(){
+        return publishSubject.asObservable();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private int id;
 
         @BindView(R.id.imageview_character) ImageView characterImage;
         @BindView(R.id.textview_character_name) TextView characterName;
@@ -54,6 +65,10 @@ public class LandingAdapter extends RecyclerView.Adapter<LandingAdapter.ViewHold
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        void setCharacterId(int id) {
+            this.id = id;
         }
 
         void setCharacterImage(String imagePath) {
@@ -64,6 +79,10 @@ public class LandingAdapter extends RecyclerView.Adapter<LandingAdapter.ViewHold
 
         void setCharacterName(String name) {
             characterName.setText(name);
+        }
+
+        public String getCharacterName() {
+            return characterName.getText().toString();
         }
     }
 }

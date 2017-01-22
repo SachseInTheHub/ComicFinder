@@ -5,6 +5,8 @@ import com.sachse.comicfinder.api.models.Response;
 import com.sachse.comicfinder.io.FileStorage;
 import com.sachse.comicfinder.model.Character;
 
+import java.util.List;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,7 +42,7 @@ public class DataRepository implements ResultService {
 
     @Override
     public void fetchCharacterFromAPI(final int characterId) {
-        String fields = String.format("%s,%s,%s,%s,%s", "name", "aliases", "birth", "power", "image");
+        String fields = String.format("%s,%s,%s,%s,%s", "name", "aliases", "birth", "powers", "image");
 
         characterService.getCharacterById(characterId, fields)
                 .subscribeOn(ioScheduler)
@@ -55,11 +57,17 @@ public class DataRepository implements ResultService {
         return fileStorage.onDataChanged();
     }
 
-    @Override public Observable<Object> fetchListOfCharactersFromApi(int[] charactersIds) {
-        for (int i = 0; i < charactersIds.length; i++) {
-            fetchCharacterFromAPI(charactersIds[i]);
+    @Override public void fetchListOfCharactersFromApi(int[] charactersIds) {
+        for (int charactersId : charactersIds) {
+            fetchCharacterFromAPI(charactersId);
         }
+    }
 
-        return Observable.empty();
+    public Observable<List<Character>> fetchAllCharacterFromDB() {
+        return Observable.just(fileStorage.getAllCharacters());
+    }
+
+    public boolean isEmpty() {
+        return fileStorage.getAllCharacters().isEmpty();
     }
 }

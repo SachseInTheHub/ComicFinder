@@ -4,6 +4,8 @@ import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.model.Character;
 import com.sachse.comicfinder.repository.DataRepository;
 
+import java.util.List;
+
 import rx.Scheduler;
 
 public class LandingPresenter extends BasePresenter<LandingPresenter.View> {
@@ -19,11 +21,9 @@ public class LandingPresenter extends BasePresenter<LandingPresenter.View> {
     }
 
     @Override public void onViewAttached(View view) {
-        int[] list = { 1699, 1702, 1455 };
-        addSubscription(dataRepository.fetchListOfCharactersFromApi(list)
-                .subscribeOn(uiScheduler)
-                .observeOn(uiScheduler)
-                .subscribe());
+        addSubscription(dataRepository.fetchAllCharacterFromDB()
+                .subscribeOn(ioScheduler)
+                .subscribe(view::populateAdapter));
 
         addSubscription(dataRepository.onDataRefresh()
                 .subscribeOn(uiScheduler)
@@ -34,5 +34,7 @@ public class LandingPresenter extends BasePresenter<LandingPresenter.View> {
     public interface View {
 
         void updateAdapter(Character character);
+
+        void populateAdapter(List<Character> characterList);
     }
 }

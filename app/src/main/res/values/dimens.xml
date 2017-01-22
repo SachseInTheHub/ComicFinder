@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="character_hero_thumbnail">230dp</dimen>
+    <dimen name="character_hero_thumbnail">250dp</dimen>
     <dimen name="character_name">30sp</dimen>
     <dimen name="character_description">21sp</dimen>
 
@@ -20,4 +20,5 @@
     <dimen name="grid_8x">32dp</dimen>
     <dimen name="grid_9x">36dp</dimen>
     <dimen name="grid_10x">40dp</dimen>
+    <dimen name="landing_character_name">30sp</dimen>
 </resources>

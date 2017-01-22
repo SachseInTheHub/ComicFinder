@@ -1,12 +1,14 @@
 package com.sachse.comicfinder.io;
 
 import com.sachse.comicfinder.api.models.Image;
+import com.sachse.comicfinder.api.models.Powers;
 import com.sachse.comicfinder.model.Character;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -24,9 +26,17 @@ public class FileStorage {
             Character realmCharacter = realmTransaction.createObject(Character.class);
             realmCharacter.setName(character.getName());
             realmCharacter.setBirth(character.getBirth());
+            realmCharacter.setAliases(character.getAliases());
+
             Image image = realmTransaction.copyToRealm(character.getImage());
             realmCharacter.setImage(image);
             realmCharacter.setImageMediumUrl(image.getMediumUrl());
+
+            RealmList<Powers> realmPowers = new RealmList<>();
+            for (Powers power : character.getPowers()) {
+                realmPowers.add(realmTransaction.copyToRealm(power));
+            }
+            realmCharacter.setPowers(realmPowers);
 
             dataSubject.onNext(realmCharacter);
         });

@@ -6,11 +6,10 @@ import rx.Observable;
 
 public interface ResultService {
 
+    void fetchCharacterFromAPI(int characterId);
+    void fetchListOfCharactersFromApi(int[] charactersIds);
+
     Character fetchCharacterFromDB(String characterName);
 
-    void fetchCharacterFromAPI(int characterId);
-
     Observable<Character> onDataRefresh();
-
-    Observable<Object> fetchListOfCharactersFromApi(int[] charactersIds);
 }
