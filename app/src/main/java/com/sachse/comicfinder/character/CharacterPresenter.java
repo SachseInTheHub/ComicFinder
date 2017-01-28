@@ -1,4 +1,4 @@
-package com.sachse.comicfinder.home;
+package com.sachse.comicfinder.character;
 
 import com.sachse.comicfinder.BasePresenter;
 import com.sachse.comicfinder.repository.DataRepository;
@@ -7,12 +7,12 @@ import rx.Observable;
 import rx.Scheduler;
 import timber.log.Timber;
 
-public class HomePresenter extends BasePresenter<HomePresenter.View> {
+public class CharacterPresenter extends BasePresenter<CharacterPresenter.View> {
 
     private final DataRepository dataRepository;
     private final Scheduler uiScheduler;
 
-    public HomePresenter(final DataRepository dataRepository,
+    public CharacterPresenter(final DataRepository dataRepository,
             final Scheduler uiScheduler) {
         this.dataRepository = dataRepository;
         this.uiScheduler = uiScheduler;

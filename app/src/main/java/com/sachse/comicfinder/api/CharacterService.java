@@ -1,6 +1,6 @@
 package com.sachse.comicfinder.api;
 
-import com.sachse.comicfinder.api.models.Response;
+import com.sachse.comicfinder.model.Response;
 
 import rx.Observable;
 

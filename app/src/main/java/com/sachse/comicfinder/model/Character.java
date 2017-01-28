@@ -1,8 +1,5 @@
 package com.sachse.comicfinder.model;
 
-import com.sachse.comicfinder.api.models.Image;
-import com.sachse.comicfinder.api.models.Powers;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

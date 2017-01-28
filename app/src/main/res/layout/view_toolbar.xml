@@ -5,4 +5,4 @@
     android:layout_height="?attr/actionBarSize"
     android:elevation="@dimen/grid_1x"
     android:theme="@style/ComicFinderToolbar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />

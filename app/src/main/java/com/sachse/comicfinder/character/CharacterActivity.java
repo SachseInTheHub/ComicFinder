@@ -1,4 +1,4 @@
-package com.sachse.comicfinder.home;
+package com.sachse.comicfinder.character;
 
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
@@ -15,9 +15,9 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
-public class HomeActivity extends BaseActivity implements HomePresenter.View {
+public class CharacterActivity extends BaseActivity implements CharacterPresenter.View {
 
-    private HomePresenter presenter;
+    private CharacterPresenter presenter;
 
     private PublishSubject<String> characterSubject = PublishSubject.create();
 
@@ -30,10 +30,10 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_character);
         ButterKnife.bind(this);
 
-        presenter = Shank.provideSingleton(HomePresenter.class);
+        presenter = Shank.provideSingleton(CharacterPresenter.class);
         presenter.onViewAttached(this);
 
         String name = getIntent().getStringExtra("name");

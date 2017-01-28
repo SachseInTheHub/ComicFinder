@@ -1,7 +1,7 @@
 package com.sachse.comicfinder.io;
 
-import com.sachse.comicfinder.api.models.Image;
-import com.sachse.comicfinder.api.models.Powers;
+import com.sachse.comicfinder.model.Image;
+import com.sachse.comicfinder.model.Powers;
 import com.sachse.comicfinder.model.Character;
 
 import java.util.ArrayList;

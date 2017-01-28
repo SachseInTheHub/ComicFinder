@@ -2,7 +2,7 @@ package com.sachse.comicfinder.landing;
 
 import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
-import com.sachse.comicfinder.home.HomeActivity;
+import com.sachse.comicfinder.character.CharacterActivity;
 import com.sachse.comicfinder.model.Character;
 import com.sachse.comicfinder.ui.BaseActivity;
 
@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.support.v7.widget.Toolbar;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class LandingActivity extends BaseActivity implements LandingPresenter.Vi
     private LandingPresenter presenter;
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,8 @@ public class LandingActivity extends BaseActivity implements LandingPresenter.Vi
     }
 
     private void setViews() {
+        toolbar.setTitle("Comic Finder");
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setHasFixedSize(true);
 
@@ -68,7 +72,7 @@ public class LandingActivity extends BaseActivity implements LandingPresenter.Vi
         adapter.onItemClicked().subscribe(viewHolder -> {
             String characterName = viewHolder.getCharacterName();
 
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, CharacterActivity.class);
             intent.putExtra("name", characterName);
             startActivity(intent);
 

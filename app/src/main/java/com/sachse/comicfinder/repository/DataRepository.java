@@ -1,7 +1,7 @@
 package com.sachse.comicfinder.repository;
 
 import com.sachse.comicfinder.api.CharacterService;
-import com.sachse.comicfinder.api.models.Response;
+import com.sachse.comicfinder.model.Response;
 import com.sachse.comicfinder.io.FileStorage;
 import com.sachse.comicfinder.model.Character;
 
