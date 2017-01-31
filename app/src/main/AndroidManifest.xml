@@ -22,6 +22,14 @@
         </activity>
 
         <activity android:name=".character.CharacterActivity" />
+        <activity android:name=".search.SearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

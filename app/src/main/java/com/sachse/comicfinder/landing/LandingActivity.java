@@ -4,6 +4,7 @@ import com.memoizrlabs.Shank;
 import com.sachse.comicfinder.R;
 import com.sachse.comicfinder.character.CharacterActivity;
 import com.sachse.comicfinder.model.Character;
+import com.sachse.comicfinder.search.SearchActivity;
 import com.sachse.comicfinder.ui.BaseActivity;
 
 import android.content.Intent;
@@ -14,12 +15,13 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class LandingActivity extends BaseActivity implements LandingPresenter.View {
 
@@ -60,8 +62,27 @@ public class LandingActivity extends BaseActivity implements LandingPresenter.Vi
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_load_search) {
+            startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setViews() {
-        toolbar.setTitle("Comic Finder");
+        toolbar.setTitle(getString(R.string.app_name));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setHasFixedSize(true);
@@ -75,8 +96,6 @@ public class LandingActivity extends BaseActivity implements LandingPresenter.Vi
             Intent intent = new Intent(this, CharacterActivity.class);
             intent.putExtra("name", characterName);
             startActivity(intent);
-
-            Timber.d("" + characterName);
         });
     }
 }

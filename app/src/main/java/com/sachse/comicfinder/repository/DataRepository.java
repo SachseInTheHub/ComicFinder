@@ -1,15 +1,16 @@
 package com.sachse.comicfinder.repository;
 
 import com.sachse.comicfinder.api.CharacterService;
-import com.sachse.comicfinder.model.Response;
 import com.sachse.comicfinder.io.FileStorage;
 import com.sachse.comicfinder.model.Character;
+import com.sachse.comicfinder.model.SearchResponse;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
 
 public class DataRepository implements ResultService {
 
@@ -47,7 +48,10 @@ public class DataRepository implements ResultService {
         characterService.getCharacterById(characterId, fields)
                 .subscribeOn(ioScheduler)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(Response::getResults)
+                .map(response -> {
+                    Timber.d("response");
+                    return response.getResults();
+                })
                 .doOnError(Throwable::printStackTrace)
                 .subscribe(fileStorage::storeCharacter, Throwable::printStackTrace);
     }
@@ -55,6 +59,16 @@ public class DataRepository implements ResultService {
     @Override
     public Observable<Character> onDataRefresh() {
         return fileStorage.onDataChanged();
+    }
+
+    @Override public Observable<List<Character>> searchCharacter(String query) {
+        String fields = String.format("%s,%s,%s,%s,%s", "name", "aliases", "birth", "powers", "image");
+
+        return characterService.searchCharacter(fields, "", query)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable::printStackTrace)
+                .subscribeOn(ioScheduler)
+                .map(SearchResponse::getCharacters);
     }
 
     @Override public void fetchListOfCharactersFromApi(int[] charactersIds) {

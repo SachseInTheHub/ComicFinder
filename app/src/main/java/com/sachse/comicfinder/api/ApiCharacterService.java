@@ -1,6 +1,7 @@
 package com.sachse.comicfinder.api;
 
 import com.sachse.comicfinder.model.Response;
+import com.sachse.comicfinder.model.SearchResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -32,6 +33,11 @@ public class ApiCharacterService implements CharacterService {
         return api.getCharacterById(characterId, fields).subscribeOn(ioScheduler);
     }
 
+    @Override
+    public Observable<SearchResponse> searchCharacter(String fields, String resourcesToSearch, String characterName) {
+        return api.searchCharacter(fields, "character", characterName).subscribeOn(ioScheduler);
+    }
+
     interface Api {
 
         @GET("characters") Observable<Response> getAllCharacters();
@@ -41,10 +47,8 @@ public class ApiCharacterService implements CharacterService {
         @GET("character/4005-{id}") Observable<Response> getCharacterById(@Path("id") int characterId,
                 @Query("field_list") String fields);
 
-        @GET("search/")
-        Observable<Response> searchCharacter(
-                @Query("field_list") String fields,
-                @Query("resources") String resourcesToSearch,
+        @GET("search/") Observable<SearchResponse> searchCharacter(@Query("field_list") String fields,
+                @Query("resource_type") String resourcesToSearch,
                 @Query("query") String characterName);
     }
 }

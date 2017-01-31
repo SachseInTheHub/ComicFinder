@@ -6,6 +6,7 @@ import com.sachse.comicfinder.character.CharacterPresenter;
 import com.sachse.comicfinder.landing.LandingPresenter;
 import com.sachse.comicfinder.repository.DataRepository;
 import com.sachse.comicfinder.result.ResultPresenter;
+import com.sachse.comicfinder.search.SearchPresenter;
 
 import rx.Scheduler;
 
@@ -27,6 +28,11 @@ public class PresenterShankModule implements ShankModule {
                 provideSingleton(Scheduler.class)));
 
         registerFactory(LandingPresenter.class, () -> new LandingPresenter(
+                provideSingleton(DataRepository.class),
+                named("ui").provideSingleton(Scheduler.class),
+                named("io").provideSingleton(Scheduler.class)));
+
+        registerFactory(SearchPresenter.class, () -> new SearchPresenter(
                 provideSingleton(DataRepository.class),
                 named("ui").provideSingleton(Scheduler.class),
                 named("io").provideSingleton(Scheduler.class)));

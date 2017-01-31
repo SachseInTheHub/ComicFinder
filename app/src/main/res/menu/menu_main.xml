@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_load_search"
+        android:icon="@drawable/ic_search_holo_light"
         android:title="@string/action_search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always" />
-
 </menu>
